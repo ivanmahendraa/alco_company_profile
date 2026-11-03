@@ -12,16 +12,16 @@ import 'package:alco_company_profile/widgets/news_card.dart';
 
 void main() {
   group('CustomAppBar Tests', () {
-    testWidgets('renders title and actions without back button by default',
-        (tester) async {
+    testWidgets('renders title and actions without back button when disabled', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             appBar: CustomAppBar(
               title: 'Test Header',
-              actions: [
-                Icon(Icons.info, key: Key('info_icon')),
-              ],
+              showBackButton: false,
+              actions: [Icon(Icons.info, key: Key('info_icon'))],
             ),
           ),
         ),
@@ -32,8 +32,9 @@ void main() {
       expect(find.byIcon(Icons.arrow_back), findsNothing);
     });
 
-    testWidgets('renders back button and calls onBackPressed when tapped',
-        (tester) async {
+    testWidgets('renders back button and calls onBackPressed when tapped', (
+      tester,
+    ) async {
       bool backPressed = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -56,8 +57,9 @@ void main() {
   });
 
   group('CustomButton Tests', () {
-    testWidgets('PrimaryButton handles tap and displays content',
-        (tester) async {
+    testWidgets('PrimaryButton handles tap and displays content', (
+      tester,
+    ) async {
       bool tapped = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -77,8 +79,9 @@ void main() {
       expect(tapped, isTrue);
     });
 
-    testWidgets('PrimaryButton does not trigger tap when disabled or loading',
-        (tester) async {
+    testWidgets('PrimaryButton does not trigger tap when disabled or loading', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -103,8 +106,9 @@ void main() {
       expect(elevatedButton.onPressed, isNull);
     });
 
-    testWidgets('SecondaryButton handles tap and displays distinct style',
-        (tester) async {
+    testWidgets('SecondaryButton handles tap and displays distinct style', (
+      tester,
+    ) async {
       bool tapped = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -126,8 +130,9 @@ void main() {
   });
 
   group('InfoCard Tests', () {
-    testWidgets('renders title, description, icon, and triggers onTap',
-        (tester) async {
+    testWidgets('renders title, description, icon, and triggers onTap', (
+      tester,
+    ) async {
       bool tapped = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -202,15 +207,13 @@ void main() {
       expect(find.text('Username is required.'), findsNothing);
     });
 
-    testWidgets('toggles password visibility when isPassword is true',
-        (tester) async {
+    testWidgets('toggles password visibility when isPassword is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: CustomTextField(
-              label: 'Password',
-              isPassword: true,
-            ),
+            body: CustomTextField(label: 'Password', isPassword: true),
           ),
         ),
       );
@@ -241,8 +244,9 @@ void main() {
       content: 'Detailed description of the activity.',
     );
 
-    testWidgets('renders all content and supports tap and bookmark toggle',
-        (tester) async {
+    testWidgets('renders all content and supports tap and bookmark toggle', (
+      tester,
+    ) async {
       bool cardTapped = false;
       bool bookmarkToggled = false;
 
@@ -281,8 +285,9 @@ void main() {
       expect(bookmarkToggled, isTrue);
     });
 
-    testWidgets('shows filled bookmark icon when isBookmarked is true',
-        (tester) async {
+    testWidgets('shows filled bookmark icon when isBookmarked is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -300,8 +305,9 @@ void main() {
   });
 
   group('EmptyState Tests', () {
-    testWidgets('renders icon, title, description, and triggers action',
-        (tester) async {
+    testWidgets('renders icon, title, description, and triggers action', (
+      tester,
+    ) async {
       bool actionTapped = false;
 
       await tester.pumpWidget(
@@ -331,103 +337,112 @@ void main() {
   });
 
   group('CustomBottomNav Tests', () {
-    testWidgets('renders 3 destinations and triggers onTap with correct index',
-        (tester) async {
-      int selectedIndex = 0;
+    testWidgets(
+      'renders 3 destinations and triggers onTap with correct index',
+      (tester) async {
+        int selectedIndex = 0;
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            bottomNavigationBar: StatefulBuilder(
-              builder: (context, setState) {
-                return CustomBottomNav(
-                  currentIndex: selectedIndex,
-                  onTap: (index) {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                );
-              },
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              bottomNavigationBar: StatefulBuilder(
+                builder: (context, setState) {
+                  return CustomBottomNav(
+                    currentIndex: selectedIndex,
+                    onTap: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      expect(find.text('Home'), findsOneWidget);
-      expect(find.text('Company'), findsOneWidget);
-      expect(find.text('News'), findsOneWidget);
+        expect(find.text('Home'), findsOneWidget);
+        expect(find.text('Company'), findsOneWidget);
+        expect(find.text('News'), findsOneWidget);
 
-      // Tap Company
-      await tester.tap(find.text('Company'));
-      await tester.pumpAndSettle();
-      expect(selectedIndex, 1);
+        // Tap Company
+        await tester.tap(find.text('Company'));
+        await tester.pumpAndSettle();
+        expect(selectedIndex, 1);
 
-      // Tap News
-      await tester.tap(find.text('News'));
-      await tester.pumpAndSettle();
-      expect(selectedIndex, 2);
-    });
+        // Tap News
+        await tester.tap(find.text('News'));
+        await tester.pumpAndSettle();
+        expect(selectedIndex, 2);
+      },
+    );
   });
 
   group('Responsiveness Tests', () {
-    testWidgets('all components fit without overflow on small screens (320x480)',
-        (tester) async {
-      tester.view.physicalSize = const Size(320 * 2.0, 480 * 2.0);
-      tester.view.devicePixelRatio = 2.0;
-      addTearDown(() => tester.view.resetPhysicalSize());
+    testWidgets(
+      'all components fit without overflow on small screens (320x480)',
+      (tester) async {
+        tester.view.physicalSize = const Size(320 * 2.0, 480 * 2.0);
+        tester.view.devicePixelRatio = 2.0;
+        addTearDown(() => tester.view.resetPhysicalSize());
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            appBar: const CustomAppBar(title: 'Small Screen'),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    const PrimaryButton(text: 'Primary Action', onPressed: null),
-                    const SizedBox(height: 8),
-                    const SecondaryButton(text: 'Secondary Action', onPressed: null),
-                    const SizedBox(height: 8),
-                    const InfoCard(
-                      title: 'Card Title',
-                      description: 'Card description on narrow screen.',
-                    ),
-                    const SizedBox(height: 8),
-                    const CustomTextField(label: 'Input Field'),
-                    const SizedBox(height: 8),
-                    NewsCard(
-                      item: const NewsItem(
-                        id: 'n-1',
-                        title: 'Narrow Screen News Item',
-                        category: 'Update',
-                        date: '2026',
-                        summary: 'Brief description.',
-                        content: 'Content',
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              appBar: const CustomAppBar(title: 'Small Screen'),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      const PrimaryButton(
+                        text: 'Primary Action',
+                        onPressed: null,
                       ),
-                      onBookmarkToggle: () {},
-                    ),
-                    const SizedBox(height: 8),
-                    const EmptyState(
-                      title: 'Empty',
-                      description: 'No data available.',
-                    ),
-                  ],
+                      const SizedBox(height: 8),
+                      const SecondaryButton(
+                        text: 'Secondary Action',
+                        onPressed: null,
+                      ),
+                      const SizedBox(height: 8),
+                      const InfoCard(
+                        title: 'Card Title',
+                        description: 'Card description on narrow screen.',
+                      ),
+                      const SizedBox(height: 8),
+                      const CustomTextField(label: 'Input Field'),
+                      const SizedBox(height: 8),
+                      NewsCard(
+                        item: const NewsItem(
+                          id: 'n-1',
+                          title: 'Narrow Screen News Item',
+                          category: 'Update',
+                          date: '2026',
+                          summary: 'Brief description.',
+                          content: 'Content',
+                        ),
+                        onBookmarkToggle: () {},
+                      ),
+                      const SizedBox(height: 8),
+                      const EmptyState(
+                        title: 'Empty',
+                        description: 'No data available.',
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            bottomNavigationBar: CustomBottomNav(
-              currentIndex: 0,
-              onTap: (_) {},
+              bottomNavigationBar: CustomBottomNav(
+                currentIndex: 0,
+                onTap: (_) {},
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      },
+    );
   });
 }
-

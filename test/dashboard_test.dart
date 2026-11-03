@@ -6,6 +6,8 @@ import 'package:alco_company_profile/data/company_data.dart';
 import 'package:alco_company_profile/data/news_data.dart';
 import 'package:alco_company_profile/screens/dashboard_screen.dart';
 import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
+import 'package:alco_company_profile/widgets/alco_logo.dart';
+import 'package:alco_company_profile/widgets/info_card.dart';
 import 'package:alco_company_profile/widgets/news_card.dart';
 
 Future<void> _openDashboard(WidgetTester tester) async {
@@ -31,7 +33,111 @@ void main() {
     await _openDashboard(tester);
 
     expect(find.byType(DashboardScreen), findsOneWidget);
-    expect(find.text('Selamat datang'), findsOneWidget);
+    expect(find.text('Selamat datang di ALCO'), findsOneWidget);
+    expect(
+      find.text(
+        'Jelajahi profil perusahaan, informasi bisnis, dan berita terbaru.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('dashboard-welcome-hero')), findsOneWidget);
+    expect(find.byKey(const Key('dashboard-header')), findsOneWidget);
+    expect(find.byKey(const Key('alco-logo')), findsOneWidget);
+    final headerLogo = tester.widget<AlcoLogo>(find.byType(AlcoLogo));
+    expect(headerLogo.height, 40);
+    expect(headerLogo.width, isNull);
+    final header = tester.widget<AppBar>(
+      find.byKey(const Key('dashboard-header')),
+    );
+    expect(header.toolbarHeight, 64);
+    final headerRect = tester.getRect(
+      find.byKey(const Key('dashboard-header')),
+    );
+    final logoRect = tester.getRect(find.byKey(const Key('alco-logo')));
+    expect((logoRect.center.dy - headerRect.center.dy).abs(), lessThan(1));
+    expect(
+      logoRect.left,
+      closeTo(
+        tester.getRect(find.byKey(const Key('dashboard-welcome-hero'))).left,
+        1,
+      ),
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('dashboard-header')),
+        matching: find.text('Beranda'),
+      ),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const Key('dashboard-view-profile-link')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .getSize(find.byKey(const Key('dashboard-view-profile-link')))
+          .height,
+      greaterThanOrEqualTo(48),
+    );
+    expect(
+      tester.getRect(find.byKey(const Key('dashboard-welcome-hero'))).bottom -
+          tester.getRect(find.text('Lihat Profil')).bottom,
+      closeTo(17, 1),
+    );
+    expect(
+      tester
+          .getSize(find.byKey(const Key('dashboard-business-info-link')))
+          .height,
+      greaterThanOrEqualTo(48),
+    );
+    expect(
+      tester
+              .getRect(find.byKey(const Key('dashboard-company-summary')))
+              .bottom -
+          tester.getRect(find.text('Lihat Informasi Bisnis')).bottom,
+      closeTo(17, 1),
+    );
+    final summaryCard = tester.widget<InfoCard>(
+      find.byKey(const Key('dashboard-company-summary')),
+    );
+    expect(summaryCard.padding, const EdgeInsets.all(16));
+    expect(summaryCard.borderRadius, 14);
+    expect(summaryCard.centerTitleWithIcon, isTrue);
+    final summaryTitle = find.descendant(
+      of: find.byKey(const Key('dashboard-company-summary')),
+      matching: find.text(companyInfo.name),
+    );
+    final summaryIcon = find.descendant(
+      of: find.byKey(const Key('dashboard-company-summary')),
+      matching: find.byIcon(Icons.business_outlined),
+    );
+    expect(
+      (tester.getRect(summaryTitle).center.dy -
+              tester.getRect(summaryIcon).center.dy)
+          .abs(),
+      lessThan(1),
+    );
+    for (final quickAccessKey in [
+      const Key('quick-access-company'),
+      const Key('quick-access-business'),
+      const Key('quick-access-news'),
+    ]) {
+      final quickAccessCard = tester.widget<InfoCard>(
+        find.descendant(
+          of: find.byKey(quickAccessKey),
+          matching: find.byType(InfoCard),
+        ),
+      );
+      expect(quickAccessCard.padding, const EdgeInsets.all(16));
+      expect(quickAccessCard.borderRadius, 14);
+    }
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('dashboard-header')),
+        matching: find.text('PT. Alcotraindo Batam'),
+      ),
+      findsNothing,
+    );
     expect(find.text(companyInfo.name), findsOneWidget);
     expect(find.text('Akses Cepat'), findsOneWidget);
     expect(find.text('Berita Terbaru'), findsOneWidget);
@@ -43,6 +149,78 @@ void main() {
     expect(find.text(companyInfo.address!), findsNothing);
     expect(companyInfo.vision, isNull);
     expect(tester.takeException(), isNull);
+
+    double gapBetween(Finder first, Finder second) {
+      return tester.getTopLeft(second).dy - tester.getBottomLeft(first).dy;
+    }
+
+    expect(
+      gapBetween(
+        find.byKey(const Key('dashboard-welcome-hero')),
+        find.byKey(const Key('dashboard-company-summary')),
+      ),
+      12,
+    );
+    expect(
+      gapBetween(
+        find.byKey(const Key('dashboard-company-summary')),
+        find.text('Akses Cepat'),
+      ),
+      24,
+    );
+    expect(
+      gapBetween(
+        find.text('Akses Cepat'),
+        find.byKey(const Key('quick-access-company')),
+      ),
+      12,
+    );
+    expect(
+      gapBetween(
+        find.byKey(const Key('quick-access-company')),
+        find.byKey(const Key('quick-access-business')),
+      ),
+      12,
+    );
+    expect(
+      gapBetween(
+        find.byKey(const Key('quick-access-business')),
+        find.byKey(const Key('quick-access-news')),
+      ),
+      12,
+    );
+    expect(
+      gapBetween(
+        find.byKey(const Key('quick-access-news')),
+        find.text('Berita Terbaru'),
+      ),
+      24,
+    );
+    expect(
+      gapBetween(
+        find.text('Berita Terbaru'),
+        find.byKey(Key('dashboard-news-${newsItems.first.id}')),
+      ),
+      12,
+    );
+    expect(
+      gapBetween(
+        find.byKey(Key('dashboard-news-${newsItems[0].id}')),
+        find.byKey(Key('dashboard-news-${newsItems[1].id}')),
+      ),
+      12,
+    );
+  });
+
+  test('Dashboard greeting follows device-local hour boundaries', () {
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 3, 59)), 'Selamat malam');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 4)), 'Selamat pagi');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 10, 59)), 'Selamat pagi');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 11)), 'Selamat siang');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 14, 59)), 'Selamat siang');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 15)), 'Selamat sore');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 17, 59)), 'Selamat sore');
+    expect(dashboardGreeting(DateTime(2026, 1, 1, 18)), 'Selamat malam');
   });
 
   testWidgets(
@@ -50,6 +228,24 @@ void main() {
     (WidgetTester tester) async {
       await _openDashboard(tester);
 
+      await tester.tap(find.byKey(const Key('dashboard-view-profile-link')));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Layar Profil Perusahaan akan dibuat pada Task 06.'),
+        findsOneWidget,
+      );
+      await tester.tap(find.text('Home'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('dashboard-business-info-link')));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Layar Informasi Bisnis akan dibuat pada Task 07.'),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.byIcon(Icons.arrow_back));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('dashboard-company-summary')));
       await tester.pumpAndSettle();
       expect(
@@ -100,6 +296,91 @@ void main() {
         findsOneWidget,
       );
       expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('all non-Dashboard placeholders show a labeled back button', (
+    WidgetTester tester,
+  ) async {
+    await _openDashboard(tester);
+
+    expect(find.byTooltip('Kembali'), findsNothing);
+
+    await tester.tap(find.text('Company'));
+    await tester.pumpAndSettle();
+    expect(find.text('Profil Perusahaan'), findsOneWidget);
+    expect(find.byTooltip('Kembali'), findsOneWidget);
+    final backButton = tester.getRect(find.byTooltip('Kembali'));
+    expect(backButton.width, greaterThanOrEqualTo(48));
+    expect(backButton.height, greaterThanOrEqualTo(48));
+
+    await tester.tap(find.byTooltip('Kembali'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DashboardScreen), findsOneWidget);
+
+    await tester.tap(find.text('Home'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('dashboard-business-info-link')));
+    await tester.pumpAndSettle();
+    expect(find.text('Informasi Bisnis'), findsOneWidget);
+    expect(find.byTooltip('Kembali'), findsOneWidget);
+    await tester.tap(find.byTooltip('Kembali'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DashboardScreen), findsOneWidget);
+
+    await tester.tap(find.text('News'));
+    await tester.pumpAndSettle();
+    expect(find.text('Berita dan Aktivitas'), findsOneWidget);
+    expect(find.byTooltip('Kembali'), findsOneWidget);
+
+    await tester.tap(find.text('Home'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(Key('dashboard-news-${newsItems.first.id}')),
+    );
+    await tester.tap(find.text(newsItems.first.title));
+    await tester.pumpAndSettle();
+    expect(find.text('Detail Berita'), findsOneWidget);
+    expect(find.byTooltip('Kembali'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Berita dan Aktivitas'), findsOneWidget);
+    expect(find.byTooltip('Kembali'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Kembali'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DashboardScreen), findsOneWidget);
+    expect(
+      Navigator.of(tester.element(find.byType(DashboardScreen))).canPop(),
+      isFalse,
+    );
+  });
+
+  testWidgets(
+    'system back from Company and News returns to Dashboard without stacking',
+    (WidgetTester tester) async {
+      await _openDashboard(tester);
+
+      await tester.tap(find.text('Company'));
+      await tester.pumpAndSettle();
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
+      expect(find.byType(DashboardScreen), findsOneWidget);
+      expect(
+        Navigator.of(tester.element(find.byType(DashboardScreen))).canPop(),
+        isFalse,
+      );
+
+      await tester.tap(find.text('News'));
+      await tester.pumpAndSettle();
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
+      expect(find.byType(DashboardScreen), findsOneWidget);
+      expect(
+        Navigator.of(tester.element(find.byType(DashboardScreen))).canPop(),
+        isFalse,
+      );
     },
   );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
 
 /// Custom App Bar widget adhering to the ALCO brand identity.
@@ -15,7 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    this.showBackButton = false,
+    this.showBackButton = true,
     this.onBackPressed,
     this.actions,
     this.centerTitle = false,
@@ -24,9 +25,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => Size.fromHeight(
-        kToolbarHeight + (bottom?.preferredSize.height ?? 0.0),
-      );
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.arrow_back),
         color: AppColors.mainText,
         tooltip: 'Kembali',
+        constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
         onPressed: onBackPressed ?? () => Navigator.of(context).maybePop(),
       );
     }
@@ -47,6 +48,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       centerTitle: centerTitle,
       leading: leadingWidget,
+      automaticallyImplyLeading: false,
       title: Text(
         title,
         style: const TextStyle(
@@ -56,14 +58,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: actions,
-      bottom: bottom ??
+      bottom:
+          bottom ??
           (showBottomBorder
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(1.0),
-                  child: Container(
-                    color: AppColors.border,
-                    height: 1.0,
-                  ),
+                  child: Container(color: AppColors.border, height: 1.0),
                 )
               : null),
     );

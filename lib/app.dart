@@ -83,6 +83,7 @@ class AlcoApp extends StatelessWidget {
               title: 'Detail Berita',
               description: 'Layar Detail Berita akan dibuat pada Task 09.',
               newsItem: item,
+              backRoute: AppRoutes.news,
             ),
           );
         }
@@ -93,6 +94,7 @@ class AlcoApp extends StatelessWidget {
             description:
                 'Berita yang dipilih tidak tersedia. Layar Detail Berita '
                 'akan dibuat pada Task 09.',
+            backRoute: AppRoutes.news,
           ),
         );
       default:
