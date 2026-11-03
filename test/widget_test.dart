@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:alco_company_profile/app.dart';
-import 'package:alco_company_profile/screens/dashboard_placeholder_screen.dart';
+import 'package:alco_company_profile/screens/dashboard_screen.dart';
 import 'package:alco_company_profile/screens/login_screen.dart';
 import 'package:alco_company_profile/screens/splash_screen.dart';
+import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
 import 'package:alco_company_profile/widgets/alco_logo.dart';
 
 Widget _loginHarness() {
@@ -35,7 +36,7 @@ void main() {
     expect(find.byType(SplashScreen), findsOneWidget);
     final logo = tester.widget<SvgPicture>(find.byKey(const Key('alco-logo')));
     expect(logo.fit, BoxFit.contain);
-    expect(find.byType(DashboardPlaceholderScreen), findsNothing);
+    expect(find.byType(DashboardScreen), findsNothing);
 
     await tester.pump(const Duration(seconds: 2));
     await tester.pumpAndSettle();
@@ -216,7 +217,7 @@ void main() {
 
       expect(find.text('ID Card atau password tidak sesuai.'), findsOneWidget);
       expect(find.byType(LoginScreen), findsOneWidget);
-      expect(find.byType(DashboardPlaceholderScreen), findsNothing);
+      expect(find.byType(DashboardScreen), findsNothing);
       expect(tester.takeException(), isNull);
     }
   });
@@ -264,17 +265,16 @@ void main() {
     await tester.tap(find.byKey(const Key('login-submit')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(DashboardPlaceholderScreen), findsOneWidget);
-    expect(find.text('Dashboard'), findsOneWidget);
+    expect(find.byType(DashboardScreen), findsOneWidget);
+    expect(find.text('Beranda'), findsOneWidget);
+    expect(find.text('Akses Cepat'), findsOneWidget);
+    expect(find.byKey(const Key('dashboard-company-summary')), findsOneWidget);
+    expect(find.byType(DestinationPlaceholderScreen), findsNothing);
     expect(
-      find.text('Dashboard akan diimplementasikan pada TASK 05.'),
-      findsOneWidget,
-    );
-    expect(
-      Navigator.of(tester.element(find.byType(DashboardPlaceholderScreen)))
-          .canPop(),
+      Navigator.of(tester.element(find.byType(DashboardScreen))).canPop(),
       isFalse,
     );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets(

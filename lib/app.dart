@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'data/news_data.dart';
+import 'models/news_item.dart';
 import 'providers/news_provider.dart';
-import 'screens/dashboard_placeholder_screen.dart';
+import 'screens/dashboard_screen.dart';
+import 'screens/destination_placeholder_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_colors.dart';
@@ -17,9 +20,7 @@ class AlcoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => NewsProvider()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => NewsProvider())],
       child: MaterialApp(
         title: 'ALCO Company Profile',
         debugShowCheckedModeBanner: false,
@@ -40,12 +41,59 @@ class AlcoApp extends StatelessWidget {
       case AppRoutes.dashboard:
         return MaterialPageRoute<dynamic>(
           settings: settings,
-          builder: (_) => const DashboardPlaceholderScreen(),
+          builder: (_) => const DashboardScreen(),
         );
       case AppRoutes.splash:
         return MaterialPageRoute<dynamic>(
           settings: settings,
           builder: (_) => const SplashScreen(),
+        );
+      case AppRoutes.companyProfile:
+        return MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (_) => const DestinationPlaceholderScreen(
+            title: 'Profil Perusahaan',
+            description: 'Layar Profil Perusahaan akan dibuat pada Task 06.',
+            selectedNavigationIndex: 1,
+          ),
+        );
+      case AppRoutes.businessInfo:
+        return MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (_) => const DestinationPlaceholderScreen(
+            title: 'Informasi Bisnis',
+            description: 'Layar Informasi Bisnis akan dibuat pada Task 07.',
+          ),
+        );
+      case AppRoutes.news:
+        return MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (_) => const DestinationPlaceholderScreen(
+            title: 'Berita dan Aktivitas',
+            description: 'Layar Berita dan Aktivitas akan dibuat pada Task 08.',
+            selectedNavigationIndex: 2,
+          ),
+        );
+      case AppRoutes.newsDetail:
+        final item = settings.arguments;
+        if (item is NewsItem && newsItems.any((news) => news.id == item.id)) {
+          return MaterialPageRoute<dynamic>(
+            settings: settings,
+            builder: (_) => DestinationPlaceholderScreen(
+              title: 'Detail Berita',
+              description: 'Layar Detail Berita akan dibuat pada Task 09.',
+              newsItem: item,
+            ),
+          );
+        }
+        return MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (_) => const DestinationPlaceholderScreen(
+            title: 'Detail Berita',
+            description:
+                'Berita yang dipilih tidak tersedia. Layar Detail Berita '
+                'akan dibuat pada Task 09.',
+          ),
         );
       default:
         return MaterialPageRoute<dynamic>(
@@ -68,9 +116,7 @@ class AppFoundationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ALCO Company Profile'),
-      ),
+      appBar: AppBar(title: const Text('ALCO Company Profile')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -96,9 +142,8 @@ class AppFoundationScreen extends StatelessWidget {
                           const SizedBox(width: 8),
                           Text(
                             'Task 01 Foundation Ready',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppColors.primaryGreen,
-                                ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.primaryGreen),
                           ),
                         ],
                       ),

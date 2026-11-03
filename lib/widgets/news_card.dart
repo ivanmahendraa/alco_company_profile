@@ -62,38 +62,42 @@ class NewsCard extends StatelessWidget {
           padding: const EdgeInsets.all(14.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14.0),
-            border: Border.all(
-              color: AppColors.border,
-              width: 1.0,
-            ),
+            border: Border.all(color: AppColors.border, width: 1.0),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header row: Category & Bookmark button
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 3.0,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryGreen.withAlpha(15),
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                    child: Text(
-                      item.category,
-                      style: const TextStyle(
-                        color: AppColors.primaryGreen,
-                        fontSize: 11.0,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.3,
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 3.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryGreen.withAlpha(15),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ),
+                        child: Text(
+                          item.category,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: AppColors.primaryGreen,
+                            fontSize: 11.0,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  if (onBookmarkToggle != null)
+                  if (onBookmarkToggle != null) ...[
+                    const SizedBox(width: 8),
                     SizedBox(
                       width: 36,
                       height: 36,
@@ -112,6 +116,7 @@ class NewsCard extends StatelessWidget {
                         onPressed: onBookmarkToggle,
                       ),
                     ),
+                  ],
                 ],
               ),
               const SizedBox(height: 10.0),
@@ -154,11 +159,15 @@ class NewsCard extends StatelessWidget {
                               color: AppColors.secondaryText,
                             ),
                             const SizedBox(width: 4.0),
-                            Text(
-                              item.date,
-                              style: const TextStyle(
-                                color: AppColors.secondaryText,
-                                fontSize: 12.0,
+                            Expanded(
+                              child: Text(
+                                item.date,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: AppColors.secondaryText,
+                                  fontSize: 12.0,
+                                ),
                               ),
                             ),
                           ],
