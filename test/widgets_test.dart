@@ -361,17 +361,17 @@ void main() {
           ),
         );
 
-        expect(find.text('Home'), findsOneWidget);
-        expect(find.text('Company'), findsOneWidget);
-        expect(find.text('News'), findsOneWidget);
+        expect(find.text('Beranda'), findsOneWidget);
+        expect(find.text('Perusahaan'), findsOneWidget);
+        expect(find.text('Berita'), findsOneWidget);
 
-        // Tap Company
-        await tester.tap(find.text('Company'));
+        // Tap Perusahaan
+        await tester.tap(find.text('Perusahaan'));
         await tester.pumpAndSettle();
         expect(selectedIndex, 1);
 
-        // Tap News
-        await tester.tap(find.text('News'));
+        // Tap Berita
+        await tester.tap(find.text('Berita'));
         await tester.pumpAndSettle();
         expect(selectedIndex, 2);
       },

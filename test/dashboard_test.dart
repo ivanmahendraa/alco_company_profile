@@ -234,7 +234,7 @@ void main() {
         find.text('Layar Profil Perusahaan akan dibuat pada Task 06.'),
         findsOneWidget,
       );
-      await tester.tap(find.text('Home'));
+      await tester.tap(find.text('Beranda'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const Key('dashboard-business-info-link')));
@@ -275,14 +275,14 @@ void main() {
         findsOneWidget,
       );
 
-      await tester.tap(find.text('News'));
+      await tester.tap(find.text('Berita'));
       await tester.pumpAndSettle();
       expect(
         find.text('Layar Berita dan Aktivitas akan dibuat pada Task 08.'),
         findsOneWidget,
       );
 
-      await tester.tap(find.text('Home'));
+      await tester.tap(find.text('Beranda'));
       await tester.pumpAndSettle();
       await tester.ensureVisible(
         find.byKey(Key('dashboard-news-${newsItems.first.id}')),
@@ -306,7 +306,7 @@ void main() {
 
     expect(find.byTooltip('Kembali'), findsNothing);
 
-    await tester.tap(find.text('Company'));
+    await tester.tap(find.text('Perusahaan'));
     await tester.pumpAndSettle();
     expect(find.text('Profil Perusahaan'), findsOneWidget);
     expect(find.byTooltip('Kembali'), findsOneWidget);
@@ -318,7 +318,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(DashboardScreen), findsOneWidget);
 
-    await tester.tap(find.text('Home'));
+    await tester.tap(find.text('Beranda'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('dashboard-business-info-link')));
     await tester.pumpAndSettle();
@@ -328,12 +328,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(DashboardScreen), findsOneWidget);
 
-    await tester.tap(find.text('News'));
+    await tester.tap(find.text('Berita'));
     await tester.pumpAndSettle();
     expect(find.text('Berita dan Aktivitas'), findsOneWidget);
     expect(find.byTooltip('Kembali'), findsOneWidget);
 
-    await tester.tap(find.text('Home'));
+    await tester.tap(find.text('Beranda'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(
       find.byKey(Key('dashboard-news-${newsItems.first.id}')),
@@ -362,7 +362,7 @@ void main() {
     (WidgetTester tester) async {
       await _openDashboard(tester);
 
-      await tester.tap(find.text('Company'));
+      await tester.tap(find.text('Perusahaan'));
       await tester.pumpAndSettle();
       await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();
@@ -372,7 +372,7 @@ void main() {
         isFalse,
       );
 
-      await tester.tap(find.text('News'));
+      await tester.tap(find.text('Berita'));
       await tester.pumpAndSettle();
       await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();

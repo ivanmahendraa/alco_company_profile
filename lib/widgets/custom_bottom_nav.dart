@@ -3,9 +3,9 @@ import '../utils/app_colors.dart';
 
 /// Bottom navigation bar component adhering to the ALCO brand identity.
 /// Provides access to the three primary app destinations:
-/// 1. Home
-/// 2. Company
-/// 3. News
+/// 1. Beranda
+/// 2. Perusahaan
+/// 3. Berita
 class CustomBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -68,20 +68,20 @@ class CustomBottomNav extends StatelessWidget {
             NavigationDestination(
               icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(Icons.home),
-              label: 'Home',
-              tooltip: 'Home',
+              label: 'Beranda',
+              tooltip: 'Beranda',
             ),
             NavigationDestination(
               icon: Icon(Icons.business_outlined),
               selectedIcon: Icon(Icons.business),
-              label: 'Company',
-              tooltip: 'Company',
+              label: 'Perusahaan',
+              tooltip: 'Perusahaan',
             ),
             NavigationDestination(
               icon: Icon(Icons.newspaper_outlined),
               selectedIcon: Icon(Icons.newspaper),
-              label: 'News',
-              tooltip: 'News',
+              label: 'Berita',
+              tooltip: 'Berita',
             ),
           ],
         ),
@@ -89,4 +89,3 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 }
-
