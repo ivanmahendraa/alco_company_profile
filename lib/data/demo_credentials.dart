@@ -1,9 +1,9 @@
 abstract final class DemoCredentials {
-  static const String email = 'demo@alco.local';
-  static const String password = 'AlcoDemo2026!';
+  static const String idCard = '123040014';
+  static const String password = 'Password';
 
-  static bool matches({required String email, required String password}) {
-    return email.trim().toLowerCase() == DemoCredentials.email &&
+  static bool matches({required String idCard, required String password}) {
+    return idCard.trim().toUpperCase() == DemoCredentials.idCard &&
         password == DemoCredentials.password;
   }
 }

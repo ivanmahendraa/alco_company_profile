@@ -17,5 +17,5 @@ The login flow is a local practicum simulation only. It is not production
 authentication, does not contact a backend or online service, and does not
 store submitted passwords.
 
-- Email: `demo@alco.local`
-- Password: `AlcoDemo2026!`
+- ID Card: `123040014`
+- Password: `Password`

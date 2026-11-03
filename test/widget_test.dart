@@ -66,12 +66,12 @@ void main() {
     await tester.tap(find.byKey(const Key('login-submit')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Email wajib diisi.'), findsOneWidget);
+    expect(find.text('ID Card wajib diisi.'), findsOneWidget);
     expect(find.text('Password wajib diisi.'), findsOneWidget);
     expect(find.byType(LoginScreen), findsOneWidget);
   });
 
-  testWidgets('Email and password each show required validation', (
+  testWidgets('ID Card and password each show required validation', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(_loginHarness());
@@ -82,12 +82,12 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('login-submit')));
     await tester.pumpAndSettle();
-    expect(find.text('Email wajib diisi.'), findsOneWidget);
+    expect(find.text('ID Card wajib diisi.'), findsOneWidget);
     expect(find.text('Password wajib diisi.'), findsNothing);
 
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Masukkan email'),
-      'demo@alco.local',
+      find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+      '123040014',
     );
     await tester.enterText(
       find.widgetWithText(TextFormField, 'Masukkan password'),
@@ -95,8 +95,57 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('login-submit')));
     await tester.pumpAndSettle();
-    expect(find.text('Email wajib diisi.'), findsNothing);
+    expect(find.text('ID Card wajib diisi.'), findsNothing);
     expect(find.text('Password wajib diisi.'), findsOneWidget);
+  });
+
+  testWidgets('Login displays centered ID Card and password fields', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(_loginHarness());
+
+    expect(find.text('ID Card'), findsOneWidget);
+    expect(find.text('Masukkan ID Card Anda'), findsOneWidget);
+    expect(find.byIcon(Icons.badge_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.lock_outline), findsOneWidget);
+    expect(find.text('Lupa password?'), findsOneWidget);
+    expect(find.byTooltip('Tampilkan sandi'), findsOneWidget);
+
+    final title = tester.widget<Text>(find.text('Login'));
+    final subtitle = tester.widget<Text>(find.text('Masuk ke akun Anda'));
+    expect(title.textAlign, TextAlign.center);
+    expect(subtitle.textAlign, TextAlign.center);
+
+    final idCardField = tester.widget<EditableText>(
+      find.descendant(
+        of: find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+        matching: find.byType(EditableText),
+      ),
+    );
+    expect(idCardField.keyboardType, TextInputType.number);
+    expect(
+      tester.getTopLeft(find.text('Lupa password?')).dy,
+      lessThan(tester.getTopLeft(find.byKey(const Key('login-submit'))).dy),
+    );
+  });
+
+  testWidgets('Login content is vertically centered with a two-line footer', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(720, 1600);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(_loginHarness());
+
+    expect(find.text('© 2026 PT. Alcotraindo Batam.'), findsOneWidget);
+    expect(find.text('All rights reserved.'), findsOneWidget);
+
+    final top = tester.getTopLeft(find.byType(AlcoLogo)).dy;
+    final bottom = tester.getBottomRight(find.text('All rights reserved.')).dy;
+    final screenCenter = tester.getSize(find.byType(Scaffold)).height / 2;
+    expect(((top + bottom) / 2 - screenCenter).abs(), lessThan(1));
   });
 
   testWidgets('Login password is hidden by default and can be toggled', (
@@ -120,42 +169,43 @@ void main() {
     expect(editableText.obscureText, isTrue);
   });
 
-  testWidgets('Email field accent is configurable without changing password', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(_loginHarness());
+  testWidgets(
+    'ID Card field accent is configurable without changing password',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(_loginHarness());
 
-    final emailField = tester.widget<InputDecorator>(
-      find.ancestor(
-        of: find.text('Masukkan email'),
-        matching: find.byType(InputDecorator),
-      ),
-    );
-    expect(emailField.decoration.fillColor, const Color(0xFFE8F0FE));
+      final idCardField = tester.widget<InputDecorator>(
+        find.ancestor(
+          of: find.text('Masukkan ID Card Anda'),
+          matching: find.byType(InputDecorator),
+        ),
+      );
+      expect(idCardField.decoration.fillColor, const Color(0xFFE8F0FE));
 
-    final passwordField = tester.widget<InputDecorator>(
-      find.ancestor(
-        of: find.text('Masukkan password'),
-        matching: find.byType(InputDecorator),
-      ),
-    );
-    expect(passwordField.decoration.fillColor, Colors.white);
-  });
+      final passwordField = tester.widget<InputDecorator>(
+        find.ancestor(
+          of: find.text('Masukkan password'),
+          matching: find.byType(InputDecorator),
+        ),
+      );
+      expect(passwordField.decoration.fillColor, Colors.white);
+    },
+  );
 
   testWidgets('Invalid demo credentials show an error and stay on Login', (
     WidgetTester tester,
   ) async {
     final invalidCredentials = [
-      ('wrong@alco.local', 'AlcoDemo2026!'),
-      ('demo@alco.local', 'wrong-password'),
-      ('wrong@alco.local', 'wrong-password'),
+      ('123040000', 'Password'),
+      ('123040014', 'wrong-password'),
+      ('WRONG001', 'wrong-password'),
     ];
 
-    for (final (email, password) in invalidCredentials) {
+    for (final (idCard, password) in invalidCredentials) {
       await tester.pumpWidget(_loginHarness());
       await tester.enterText(
-        find.widgetWithText(TextFormField, 'Masukkan email'),
-        email,
+        find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+        idCard,
       );
       await tester.enterText(
         find.widgetWithText(TextFormField, 'Masukkan password'),
@@ -164,7 +214,7 @@ void main() {
       await tester.tap(find.byKey(const Key('login-submit')));
       await tester.pumpAndSettle();
 
-      expect(find.text('Email atau password tidak sesuai.'), findsOneWidget);
+      expect(find.text('ID Card atau password tidak sesuai.'), findsOneWidget);
       expect(find.byType(LoginScreen), findsOneWidget);
       expect(find.byType(DashboardPlaceholderScreen), findsNothing);
       expect(tester.takeException(), isNull);
@@ -176,8 +226,8 @@ void main() {
   ) async {
     await tester.pumpWidget(_loginHarness());
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Masukkan email'),
-      'wrong@alco.local',
+      find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+      '123040000',
     );
     await tester.enterText(
       find.widgetWithText(TextFormField, 'Masukkan password'),
@@ -185,14 +235,14 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('login-submit')));
     await tester.pumpAndSettle();
-    expect(find.text('Email atau password tidak sesuai.'), findsOneWidget);
+    expect(find.text('ID Card atau password tidak sesuai.'), findsOneWidget);
 
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Masukkan email'),
-      'demo@alco.local',
+      find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+      '123040014',
     );
     await tester.pumpAndSettle();
-    expect(find.text('Email atau password tidak sesuai.'), findsNothing);
+    expect(find.text('ID Card atau password tidak sesuai.'), findsNothing);
   });
 
   testWidgets('Correct demo credentials replace Login with Dashboard', (
@@ -204,12 +254,12 @@ void main() {
 
     expect(find.byType(LoginScreen), findsOneWidget);
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Masukkan email'),
-      'demo@alco.local',
+      find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+      ' 123040014 ',
     );
     await tester.enterText(
       find.widgetWithText(TextFormField, 'Masukkan password'),
-      'AlcoDemo2026!',
+      'Password',
     );
     await tester.tap(find.byKey(const Key('login-submit')));
     await tester.pumpAndSettle();
@@ -247,7 +297,7 @@ void main() {
     },
   );
 
-  testWidgets('Splash and Login placeholder fit a small screen', (
+  testWidgets('Splash and Login screen fit a small screen', (
     WidgetTester tester,
   ) async {
     tester.view.physicalSize = const Size(640, 960);

@@ -15,17 +15,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  static const Color _emailFieldColor = Color(0xFFE8F0FE);
+  static const Color _idCardFieldColor = Color(0xFFE8F0FE);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _idCardController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _hasCredentialsError = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _idCardController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final credentialsAreValid = DemoCredentials.matches(
-      email: _emailController.text,
+      idCard: _idCardController.text,
       password: _passwordController.text,
     );
 
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   minHeight: viewportConstraints.maxHeight - 32,
                 ),
                 child: Align(
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.center,
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 520),
                     child: Column(
@@ -81,13 +81,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 24),
                         _buildLoginCard(context),
                         const SizedBox(height: 20),
-                        const Text(
-                          '© 2026 PT. Alcotraindo Batam. All rights reserved.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.secondaryText,
-                            fontSize: 12,
-                          ),
+                        const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '© 2026 PT. Alcotraindo Batam.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.secondaryText,
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              'All rights reserved.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.secondaryText,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -118,26 +131,33 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Text(
               'Login',
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineMedium
                   ?.copyWith(color: AppColors.primaryGreen, fontSize: 26),
             ),
             const SizedBox(height: 4),
             const Text(
               'Masuk ke akun Anda',
+              textAlign: TextAlign.center,
               style: TextStyle(color: AppColors.secondaryText, fontSize: 16),
             ),
             const SizedBox(height: 24),
             CustomTextField(
-              label: 'Email',
-              hintText: 'Masukkan email',
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
+              label: 'ID Card',
+              hintText: 'Masukkan ID Card Anda',
+              controller: _idCardController,
+              keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
-              fillColor: _emailFieldColor,
+              fillColor: _idCardFieldColor,
+              prefixIcon: const Icon(
+                Icons.badge_outlined,
+                color: AppColors.secondaryText,
+                size: 20,
+              ),
               onChanged: _clearCredentialsError,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Email wajib diisi.';
+                  return 'ID Card wajib diisi.';
                 }
                 return null;
               },
@@ -148,6 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Masukkan password',
               controller: _passwordController,
               isPassword: true,
+              prefixIcon: const Icon(
+                Icons.lock_outline,
+                color: AppColors.secondaryText,
+                size: 20,
+              ),
               textInputAction: TextInputAction.done,
               onChanged: _clearCredentialsError,
               onFieldSubmitted: (_) => _submit(),
@@ -158,12 +183,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 return null;
               },
             ),
+            const SizedBox(height: 8),
+            const Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Lupa password?',
+                style: TextStyle(
+                  color: AppColors.primaryGreen,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
             if (_hasCredentialsError) ...[
               const SizedBox(height: 12),
               Semantics(
                 liveRegion: true,
                 child: const Text(
-                  'Email atau password tidak sesuai.',
+                  'ID Card atau password tidak sesuai.',
                   key: Key('login-credentials-error'),
                   style: TextStyle(
                     color: AppColors.error,
