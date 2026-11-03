@@ -266,7 +266,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(DashboardScreen), findsOneWidget);
-    expect(find.text('Beranda'), findsOneWidget);
+    expect(find.byKey(const Key('alco-logo')), findsOneWidget);
+    expect(find.text('Selamat datang di ALCO'), findsOneWidget);
     expect(find.text('Akses Cepat'), findsOneWidget);
     expect(find.byKey(const Key('dashboard-company-summary')), findsOneWidget);
     expect(find.byType(DestinationPlaceholderScreen), findsNothing);

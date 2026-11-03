@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
 
 /// Versatile information card adhering to the ALCO brand identity.
@@ -13,6 +14,7 @@ class InfoCard extends StatelessWidget {
   final VoidCallback? onTap;
   final EdgeInsetsGeometry padding;
   final double borderRadius;
+  final bool centerTitleWithIcon;
 
   const InfoCard({
     super.key,
@@ -24,6 +26,7 @@ class InfoCard extends StatelessWidget {
     this.onTap,
     this.padding = const EdgeInsets.all(16.0),
     this.borderRadius = 14.0,
+    this.centerTitleWithIcon = false,
   });
 
   @override
@@ -35,7 +38,9 @@ class InfoCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: centerTitleWithIcon
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.start,
             children: [
               if (icon != null) ...[
                 Container(
@@ -75,10 +80,7 @@ class InfoCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (trailing != null) ...[
-                const SizedBox(width: 8.0),
-                trailing!,
-              ],
+              if (trailing != null) ...[const SizedBox(width: 8.0), trailing!],
             ],
           ),
           if (customContent != null) ...[
@@ -98,10 +100,7 @@ class InfoCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(
-              color: AppColors.border,
-              width: 1.0,
-            ),
+            border: Border.all(color: AppColors.border, width: 1.0),
           ),
           child: cardContent,
         ),
@@ -109,4 +108,3 @@ class InfoCard extends StatelessWidget {
     );
   }
 }
-
