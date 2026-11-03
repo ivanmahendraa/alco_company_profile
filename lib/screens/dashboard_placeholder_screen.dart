@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
 
-class LoginPlaceholderScreen extends StatelessWidget {
-  const LoginPlaceholderScreen({super.key});
+class DashboardPlaceholderScreen extends StatelessWidget {
+  const DashboardPlaceholderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class LoginPlaceholderScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Login',
+                'Dashboard',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 8),
               Text(
-                'Halaman Login akan diimplementasikan pada TASK 04.',
+                'Dashboard akan diimplementasikan pada TASK 05.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),

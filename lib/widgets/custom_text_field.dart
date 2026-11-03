@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
 
 /// Labeled text field adhering to the ALCO brand identity.
@@ -19,6 +20,7 @@ class CustomTextField extends StatefulWidget {
   final int maxLines;
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
+  final Color? fillColor;
 
   const CustomTextField({
     super.key,
@@ -36,6 +38,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLines = 1,
     this.textInputAction,
     this.focusNode,
+    this.fillColor,
   });
 
   @override
@@ -57,7 +60,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     if (widget.isPassword) {
       effectiveSuffix = IconButton(
         icon: Icon(
-          _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          _obscureText
+              ? Icons.visibility_outlined
+              : Icons.visibility_off_outlined,
           color: AppColors.secondaryText,
           size: 20,
         ),
@@ -96,16 +101,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
           enabled: widget.enabled,
           maxLines: widget.isPassword ? 1 : widget.maxLines,
           textInputAction: widget.textInputAction,
-          style: const TextStyle(
-            color: AppColors.mainText,
-            fontSize: 15.0,
-          ),
+          style: const TextStyle(color: AppColors.mainText, fontSize: 15.0),
           decoration: InputDecoration(
             hintText: widget.hintText,
             prefixIcon: widget.prefixIcon,
             suffixIcon: effectiveSuffix,
             filled: true,
-            fillColor: widget.enabled ? AppColors.surface : AppColors.appBackground,
+            fillColor:
+                widget.fillColor ??
+                (widget.enabled ? AppColors.surface : AppColors.appBackground),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16.0,
               vertical: 14.0,
@@ -129,7 +133,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
-              borderSide: const BorderSide(color: AppColors.primaryGreen, width: 1.5),
+              borderSide: const BorderSide(
+                color: AppColors.primaryGreen,
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),

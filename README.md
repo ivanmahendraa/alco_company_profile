@@ -1,17 +1,21 @@
-# alco_company_profile
+# ALCO Company Profile
 
-A new Flutter project.
+A Flutter Android practicum project presenting general information about
+PT. Alcotraindo Batam. The app uses local sample data and does not connect to a
+backend, online database, API, or authentication service.
 
-## Getting Started
+## Run the app
 
-This project is a starting point for a Flutter application.
+```sh
+flutter pub get
+flutter run
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Demo login
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+The login flow is a local practicum simulation only. It is not production
+authentication, does not contact a backend or online service, and does not
+store submitted passwords.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Email: `demo@alco.local`
+- Password: `AlcoDemo2026!`
