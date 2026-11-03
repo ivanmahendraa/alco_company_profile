@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/news_provider.dart';
+import 'screens/login_placeholder_screen.dart';
+import 'screens/splash_screen.dart';
 import 'utils/app_colors.dart';
 import 'utils/app_routes.dart';
 import 'utils/app_theme.dart';
@@ -29,7 +31,16 @@ class AlcoApp extends StatelessWidget {
 
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case AppRoutes.login:
+        return MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (_) => const LoginPlaceholderScreen(),
+        );
       case AppRoutes.splash:
+        return MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (_) => const SplashScreen(),
+        );
       default:
         return MaterialPageRoute<dynamic>(
           settings: settings,
@@ -141,4 +152,3 @@ class AppFoundationScreen extends StatelessWidget {
     );
   }
 }
-
