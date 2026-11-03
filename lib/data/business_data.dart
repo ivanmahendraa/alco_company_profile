@@ -2,27 +2,34 @@ typedef BusinessTopic = ({String title, String description});
 
 const List<BusinessTopic> businessTopics = <BusinessTopic>[
   (
-    title: 'Keselamatan dan Kesehatan Kerja',
+    title: 'Manufaktur Tembakau',
     description:
-        'Topik umum mengenai kesadaran keselamatan, identifikasi risiko, '
-        'dan kebiasaan kerja yang aman.',
+        'Perusahaan bergerak di bidang manufaktur tembakau, khususnya '
+        'rokok putih.',
   ),
   (
-    title: 'Pengelolaan Lingkungan',
+    title: 'Proses Produksi',
     description:
-        'Topik umum mengenai penggunaan sumber daya secara bijak dan '
-        'pengelolaan dampak lingkungan.',
+        'Produksi rokok dilakukan mulai dari bahan baku hingga produk jadi.',
   ),
   (
-    title: 'Pengendalian Mutu',
+    title: 'Teknologi Mesin',
     description:
-        'Topik umum mengenai pemeriksaan proses dan konsistensi mutu '
-        'dalam kegiatan operasional.',
+        'Proses produksi mencakup proses primer serta penggunaan mesin '
+        'pembuat dan pengemas rokok.',
   ),
   (
-    title: 'Pengembangan Kompetensi',
+    title: 'Kebijakan Mutu',
     description:
-        'Topik umum mengenai pembelajaran, pelatihan, dan peningkatan '
-        'keterampilan kerja.',
+        'Kebijakan mutu mencakup pengiriman produk berkualitas tepat waktu '
+        'dengan harga kompetitif, pemenuhan kebutuhan pelanggan, keterlibatan '
+        'karyawan, dan perbaikan berkelanjutan.',
+  ),
+  (
+    title: 'Komitmen dan Kepatuhan',
+    description:
+        'Komitmen perusahaan mencakup perbaikan berkelanjutan, kesetaraan, '
+        'profesionalisme kerja, kepatuhan terhadap kode etik, serta regulasi '
+        'global dan lokal.',
   ),
 ];

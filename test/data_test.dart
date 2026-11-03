@@ -6,17 +6,66 @@ import 'package:alco_company_profile/data/news_data.dart';
 
 void main() {
   group('Local company data', () {
-    test('uses explicit placeholders for unverified company information', () {
+    test('contains supplied company profile, values, policies, and details', () {
       expect(companyInfo.name, 'PT. Alcotraindo Batam');
-      expect(companyInfo.overview, contains('belum diverifikasi'));
-      expect(companyInfo.businessDescription, contains('Placeholder'));
+      expect(
+        companyInfo.overview,
+        'PT. Alcotraindo Batam adalah perusahaan manufaktur tembakau, '
+        'khususnya rokok putih, dengan jangkauan pasar di lebih dari 10 negara. '
+        'Perusahaan memproduksi rokok mulai dari bahan baku hingga produk jadi, '
+        'dengan teknologi mesin terkini untuk proses primer serta mesin pembuat '
+        'dan pengemas rokok.',
+      );
+      expect(
+        companyInfo.businessDescription,
+        contains('bahan baku hingga produk jadi'),
+      );
+      expect(companyInfo.values, <String>[
+        'Semangat untuk menang',
+        'Inovasi melalui pembelajaran dan kewirausahaan',
+        'Membangun kepercayaan secara internal dan eksternal',
+        'Wawasan global',
+        'Warga korporasi yang bertanggung jawab secara sosial',
+      ]);
+      expect(companyInfo.qualityPolicies, <String>[
+        'Pengiriman produk berkualitas tepat waktu dengan harga yang kompetitif',
+        'Menghasilkan produk/layanan berkualitas tinggi yang konsisten '
+            'memenuhi kebutuhan pelanggan',
+        'Keterlibatan penuh seluruh karyawan dengan rasa saling percaya untuk '
+            'mewujudkan proses bisnis internal yang baik dan sehat',
+        'Perbaikan berkelanjutan untuk meningkatkan efektivitas sistem '
+            'manajemen mutu dan daya saing organisasi',
+      ]);
+      expect(
+        companyInfo.commitment,
+        'Perusahaan terus maju dengan perbaikan berkelanjutan pada seluruh '
+        'proses, efektivitas, dan efisiensi. Organisasinya dinamis dan terbuka, '
+        'melibatkan semua pihak dalam setiap kegiatan dan perbaikan, menjunjung '
+        'kesetaraan dan kesempatan yang sama berdasarkan profesionalisme kerja, '
+        'mematuhi kode etik yang ditetapkan perusahaan dan disepakati seluruh '
+        'karyawan, serta tunduk pada regulasi global maupun lokal di lokasi '
+        'perusahaan berada.',
+      );
       expect(companyInfo.vision, isNull);
-      expect(companyInfo.mission, isNull);
-      expect(companyInfo.contactDetails, isNull);
+      expect(
+        companyInfo.mission,
+        'Menjadi pemain tembakau terkemuka di tingkat internasional.',
+      );
+      expect(
+        companyInfo.address,
+        'Citra Buana Industrial Park Phase III Lot 12A-12C, Batam Centre, '
+        'Batam, Kepulauan Riau, Indonesia.',
+      );
+      expect(companyInfo.phone, '0778471221');
+      expect(companyInfo.industry, 'Tembakau');
+      expect(companyInfo.foundingYear, '2012');
+      expect(companyInfo.companyType, 'Perseroan Tertutup');
+      expect(companyInfo.employeeRange, '501-1.000 karyawan (perkiraan)');
+      expect(companyInfo.headquarters, 'Batam, Kepulauan Riau');
     });
 
-    test('provides general non-promotional business topics', () {
-      expect(businessTopics, hasLength(inInclusiveRange(3, 4)));
+    test('provides topics derived from the supplied company profile', () {
+      expect(businessTopics, hasLength(5));
       expect(
         businessTopics.every(
           (topic) =>
@@ -24,6 +73,16 @@ void main() {
               topic.description.trim().isNotEmpty,
         ),
         isTrue,
+      );
+      expect(
+        businessTopics.map((topic) => topic.title),
+        containsAll(<String>[
+          'Manufaktur Tembakau',
+          'Proses Produksi',
+          'Teknologi Mesin',
+          'Kebijakan Mutu',
+          'Komitmen dan Kepatuhan',
+        ]),
       );
     });
   });
