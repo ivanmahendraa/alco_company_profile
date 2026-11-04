@@ -88,7 +88,7 @@ void main() {
   });
 
   group('Local sample news', () {
-    test('contains six complete fictional entries with stable unique IDs', () {
+    test('contains stable news entries with unique IDs', () {
       expect(newsItems, hasLength(inInclusiveRange(5, 6)));
 
       final ids = newsItems.map((item) => item.id).toSet();
@@ -102,32 +102,37 @@ void main() {
         'sample-activity-006',
       ]);
       expect(newsItems.first.id, 'sample-activity-001');
-      expect(
-        newsItems.first.title,
-        'Simulasi Annual Medical Check Up Karyawan',
-      );
-      expect(newsItems.first.category, 'Contoh Fiktif • Kesehatan Kerja');
-      expect(newsItems.first.date, '04 November 2026');
-      expect(newsItems.first.summary, startsWith('Skenario fiktif '));
+      expect(newsItems.first.title, 'Annual Medical Check Up Karyawan');
+      expect(newsItems.first.category, 'Kesehatan Kerja');
+      expect(newsItems.first.date, '6 bulan lalu');
       expect(newsItems.first.imageAsset, 'assets/images/news/news_001.jpg');
+      expect(newsItems.first.summary, contains('PT. Alcotraindo Batam'));
       final bukaPuasaItem = newsItems[1];
       expect(bukaPuasaItem.id, 'sample-activity-002');
-      expect(
-        bukaPuasaItem.title,
-        'Simulasi Buka Puasa Bersama Karyawan dan Management',
-      );
-      expect(bukaPuasaItem.category, 'Contoh Fiktif • Kebersamaan Karyawan');
-      expect(bukaPuasaItem.date, '12 Oktober 2026');
-      expect(bukaPuasaItem.summary, startsWith('Skenario fiktif '));
+      expect(bukaPuasaItem.title, 'Buka Puasa Bersama Karyawan dan Management');
+      expect(bukaPuasaItem.category, 'Kebersamaan Karyawan');
+      expect(bukaPuasaItem.date, '7 bulan lalu');
+      expect(bukaPuasaItem.summary, contains('PT. Alcotraindo Batam'));
       expect(bukaPuasaItem.imageAsset, 'assets/images/news/news_002.jpg');
       final tukarKadoItem = newsItems[2];
       expect(tukarKadoItem.id, 'sample-activity-003');
-      expect(tukarKadoItem.title, 'Simulasi Tukar Kado Karyawan Tahunan');
-      expect(tukarKadoItem.category, 'Contoh Fiktif • Kebersamaan Karyawan');
-      expect(tukarKadoItem.date, '18 September 2026');
-      expect(tukarKadoItem.summary, startsWith('Skenario fiktif '));
+      expect(tukarKadoItem.title, 'Tukar Kado Karyawan Tahunan');
+      expect(tukarKadoItem.category, 'Kebersamaan Karyawan');
+      expect(tukarKadoItem.date, '1 tahun lalu');
       expect(tukarKadoItem.summary, contains('merayakan kebersamaan'));
       expect(tukarKadoItem.imageAsset, 'assets/images/news/news_003.jpg');
+      expect(
+        newsItems
+            .take(3)
+            .every(
+              (item) =>
+                  !item.title.toLowerCase().contains('simulasi') &&
+                  !item.category.toLowerCase().contains('fiktif') &&
+                  !item.summary.toLowerCase().contains('fiktif') &&
+                  !item.content.toLowerCase().contains('fiktif'),
+            ),
+        isTrue,
+      );
       expect(
         newsItems.skip(3).every((item) => item.imageAsset == null),
         isTrue,
@@ -136,8 +141,10 @@ void main() {
       for (final item in newsItems) {
         expect(item.id, isNotEmpty);
         expect(item.title, isNotEmpty);
-        expect(item.category, contains('Contoh Fiktif'));
         expect(item.date, isNotEmpty);
+      }
+      for (final item in newsItems.skip(3)) {
+        expect(item.category, contains('Contoh Fiktif'));
         expect(item.summary, contains('fiktif'));
         expect(item.content, contains('fiktif'));
       }

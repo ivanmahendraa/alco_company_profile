@@ -7,7 +7,7 @@ import 'package:alco_company_profile/data/news_data.dart';
 import 'package:alco_company_profile/screens/business_info_screen.dart';
 import 'package:alco_company_profile/screens/company_profile_screen.dart';
 import 'package:alco_company_profile/screens/dashboard_screen.dart';
-import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
+import 'package:alco_company_profile/screens/news_detail_screen.dart';
 import 'package:alco_company_profile/screens/news_screen.dart';
 import 'package:alco_company_profile/widgets/alco_logo.dart';
 import 'package:alco_company_profile/widgets/info_card.dart';
@@ -151,9 +151,9 @@ void main() {
         .map((image) => image.semanticLabel)
         .toList();
     expect(imageLabels, hasLength(3));
-    expect(imageLabels[0], contains('Simulasi Annual Medical Check Up'));
-    expect(imageLabels[1], contains('Simulasi Buka Puasa Bersama'));
-    expect(imageLabels[2], contains('Simulasi Tukar Kado Karyawan Tahunan'));
+    expect(imageLabels[0], contains('Annual Medical Check Up'));
+    expect(imageLabels[1], contains('Buka Puasa Bersama'));
+    expect(imageLabels[2], contains('Tukar Kado Karyawan Tahunan'));
     for (final news in newsItems.take(3)) {
       expect(find.text(news.title), findsOneWidget);
     }
@@ -282,16 +282,14 @@ void main() {
     );
     await tester.tap(find.text(newsItems.first.title));
     await tester.pumpAndSettle();
-    expect(find.byType(DestinationPlaceholderScreen), findsOneWidget);
+    expect(find.byType(NewsDetailScreen), findsOneWidget);
     expect(find.text(newsItems.first.title), findsOneWidget);
-    expect(
-      find.text('Layar Detail Berita akan dibuat pada Task 09.'),
-      findsOneWidget,
-    );
+    expect(find.text(newsItems.first.category), findsOneWidget);
+    expect(find.text(newsItems.first.content), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('all non-Dashboard placeholders show a labeled back button', (
+  testWidgets('non-Dashboard screens show a labeled back button', (
     WidgetTester tester,
   ) async {
     await _openDashboard(tester);
@@ -332,15 +330,10 @@ void main() {
     );
     await tester.tap(find.text(newsItems.first.title));
     await tester.pumpAndSettle();
-    expect(find.text('Detail Berita'), findsOneWidget);
+    expect(find.byType(NewsDetailScreen), findsOneWidget);
     expect(find.byTooltip('Kembali'), findsOneWidget);
 
     await tester.binding.handlePopRoute();
-    await tester.pumpAndSettle();
-    expect(find.text('Berita dan Aktivitas'), findsOneWidget);
-    expect(find.byTooltip('Kembali'), findsOneWidget);
-
-    await tester.tap(find.byTooltip('Kembali'));
     await tester.pumpAndSettle();
     expect(find.byType(DashboardScreen), findsOneWidget);
     expect(

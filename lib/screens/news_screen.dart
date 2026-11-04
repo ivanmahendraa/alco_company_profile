@@ -142,7 +142,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                     AppRoutes.newsDetail,
-                                    arguments: item,
+                                    arguments: item.id,
                                   );
                                 },
                               );

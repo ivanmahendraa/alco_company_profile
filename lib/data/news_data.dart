@@ -1,54 +1,46 @@
 import '../models/news_item.dart';
 
-/// All entries below are fictional examples for app development and testing.
-/// They do not describe events that occurred at PT. Alcotraindo Batam.
+/// The first three entries describe company events confirmed by the user.
+/// Remaining entries are fictional examples for app development and testing.
 const List<NewsItem> newsItems = <NewsItem>[
   NewsItem(
     id: 'sample-activity-001',
-    title: 'Simulasi Annual Medical Check Up Karyawan',
-    category: 'Contoh Fiktif • Kesehatan Kerja',
-    date: '04 November 2026',
+    title: 'Annual Medical Check Up Karyawan',
+    category: 'Kesehatan Kerja',
+    date: '6 bulan lalu',
     summary:
-        'Skenario fiktif tentang pemeriksaan kesehatan berkala karyawan '
-        'sebagai topik umum kesehatan kerja.',
+        'PT. Alcotraindo Batam melaksanakan pemeriksaan kesehatan berkala '
+        'bagi karyawan.',
     content:
-        'Contoh fiktif ini membahas pemeriksaan kesehatan berkala karyawan '
-        'secara umum. Rincian pemeriksaan dapat berbeda sesuai kebutuhan dan '
-        'kebijakan masing-masing organisasi. Konten ini bukan laporan kegiatan '
-        'PT. Alcotraindo Batam dan tidak menyatakan bahwa pemeriksaan benar-benar '
-        'diselenggarakan oleh perusahaan.',
+        'Kegiatan Annual Medical Check Up karyawan PT. Alcotraindo Batam '
+        'dilaksanakan sebagai pemeriksaan kesehatan berkala.',
     imageAsset: 'assets/images/news/news_001.jpg',
   ),
   NewsItem(
     id: 'sample-activity-002',
-    title: 'Simulasi Buka Puasa Bersama Karyawan dan Management',
-    category: 'Contoh Fiktif • Kebersamaan Karyawan',
-    date: '12 Oktober 2026',
+    title: 'Buka Puasa Bersama Karyawan dan Management',
+    category: 'Kebersamaan Karyawan',
+    date: '7 bulan lalu',
     summary:
-        'Skenario fiktif tentang buka puasa bersama sebagai momen kebersamaan '
-        'karyawan dan management.',
+        'Karyawan dan management PT. Alcotraindo Batam berkumpul dalam acara '
+        'buka puasa bersama.',
     content:
-        'Contoh fiktif ini menggambarkan kegiatan buka puasa bersama karyawan '
-        'dan management sebagai momen kebersamaan. Gambar digunakan sebagai '
-        'ilustrasi untuk contoh aplikasi. Konten ini bukan laporan kegiatan '
-        'yang telah diverifikasi dan tidak menyatakan bahwa acara tersebut '
-        'benar-benar diselenggarakan oleh PT. Alcotraindo Batam.',
+        'Acara buka puasa bersama menjadi momen bagi karyawan dan management '
+        'PT. Alcotraindo Batam untuk berkumpul.',
     imageAsset: 'assets/images/news/news_002.jpg',
   ),
   NewsItem(
     id: 'sample-activity-003',
-    title: 'Simulasi Tukar Kado Karyawan Tahunan',
-    category: 'Contoh Fiktif • Kebersamaan Karyawan',
-    date: '18 September 2026',
+    title: 'Tukar Kado Karyawan Tahunan',
+    category: 'Kebersamaan Karyawan',
+    date: '1 tahun lalu',
     summary:
-        'Skenario fiktif tentang merayakan kebersamaan dalam acara tukar kado '
-        'karyawan tahunan.',
+        'Karyawan PT. Alcotraindo Batam merayakan kebersamaan melalui acara '
+        'tukar kado tahunan.',
     content:
-        'Contoh fiktif ini menggambarkan acara tukar kado karyawan tahunan '
-        'sebagai momen untuk merayakan kebersamaan. Gambar digunakan sebagai '
-        'ilustrasi untuk contoh aplikasi. Konten ini bukan laporan kegiatan '
-        'yang telah diverifikasi dan tidak menyatakan bahwa acara tersebut '
-        'benar-benar diselenggarakan oleh PT. Alcotraindo Batam.',
+        'Acara tukar kado karyawan tahunan menjadi momen kebersamaan bagi '
+        'karyawan PT. Alcotraindo Batam. Foto kegiatan memperlihatkan para '
+        'peserta membawa kado.',
     imageAsset: 'assets/images/news/news_003.jpg',
   ),
   NewsItem(

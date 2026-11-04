@@ -194,7 +194,7 @@ class DashboardScreen extends StatelessWidget {
                                   newsProvider.toggleBookmark(item.id),
                               onTap: () => Navigator.of(context).pushNamed(
                                 AppRoutes.newsDetail,
-                                arguments: item,
+                                arguments: item.id,
                               ),
                             ),
                           ),

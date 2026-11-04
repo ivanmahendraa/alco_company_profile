@@ -16,10 +16,10 @@ Widget _buildNewsApp({List<NewsItem> items = newsItems}) {
       home: NewsScreen(items: items),
       onGenerateRoute: (settings) {
         if (settings.name == AppRoutes.newsDetail) {
-          final item = settings.arguments! as NewsItem;
           return MaterialPageRoute<void>(
             settings: settings,
-            builder: (_) => Scaffold(body: Text('Detail: ${item.title}')),
+            builder: (_) =>
+                Scaffold(body: Text('Detail ID: ${settings.arguments}')),
           );
         }
         if (settings.name == AppRoutes.dashboard) {
@@ -118,7 +118,7 @@ void main() {
 
     await tester.tap(find.text(newsItems.first.title));
     await tester.pumpAndSettle();
-    expect(find.text('Detail: ${newsItems.first.title}'), findsOneWidget);
+    expect(find.text('Detail ID: ${newsItems.first.id}'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

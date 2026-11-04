@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'data/news_data.dart';
-import 'models/news_item.dart';
 import 'providers/news_provider.dart';
 import 'screens/business_info_screen.dart';
 import 'screens/company_profile_screen.dart';
 import 'screens/dashboard_screen.dart';
-import 'screens/destination_placeholder_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/news_detail_screen.dart';
 import 'screens/news_screen.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_colors.dart';
@@ -67,27 +65,11 @@ class AlcoApp extends StatelessWidget {
           builder: (_) => const NewsScreen(),
         );
       case AppRoutes.newsDetail:
-        final item = settings.arguments;
-        if (item is NewsItem && newsItems.any((news) => news.id == item.id)) {
-          return MaterialPageRoute<dynamic>(
-            settings: settings,
-            builder: (_) => DestinationPlaceholderScreen(
-              title: 'Detail Berita',
-              description: 'Layar Detail Berita akan dibuat pada Task 09.',
-              newsItem: item,
-              backRoute: AppRoutes.news,
-            ),
-          );
-        }
+        final newsId = settings.arguments;
         return MaterialPageRoute<dynamic>(
           settings: settings,
-          builder: (_) => const DestinationPlaceholderScreen(
-            title: 'Detail Berita',
-            description:
-                'Berita yang dipilih tidak tersedia. Layar Detail Berita '
-                'akan dibuat pada Task 09.',
-            backRoute: AppRoutes.news,
-          ),
+          builder: (_) =>
+              NewsDetailScreen(newsId: newsId is String ? newsId : null),
         );
       default:
         return MaterialPageRoute<dynamic>(

@@ -245,30 +245,31 @@ void main() {
     );
     const medicalCheckUpItem = NewsItem(
       id: 'sample-activity-001',
-      title: 'Simulasi Annual Medical Check Up Karyawan',
-      category: 'Contoh Fiktif • Kesehatan Kerja',
-      date: '04 November 2026',
-      summary:
-          'Skenario fiktif tentang pemeriksaan kesehatan berkala karyawan.',
-      content: 'Contoh fiktif tentang kesehatan kerja.',
+      title: 'Annual Medical Check Up Karyawan',
+      category: 'Kesehatan Kerja',
+      date: '6 bulan lalu',
+      summary: 'Pemeriksaan kesehatan berkala karyawan PT. Alcotraindo Batam.',
+      content: 'Annual Medical Check Up karyawan PT. Alcotraindo Batam.',
       imageAsset: 'assets/images/news/news_001.jpg',
     );
     const bukaPuasaItem = NewsItem(
       id: 'sample-activity-002',
-      title: 'Simulasi Buka Puasa Bersama Karyawan dan Management',
-      category: 'Contoh Fiktif • Kebersamaan Karyawan',
-      date: '12 Oktober 2026',
-      summary: 'Skenario fiktif tentang buka puasa bersama.',
-      content: 'Contoh fiktif tentang kebersamaan karyawan.',
+      title: 'Buka Puasa Bersama Karyawan dan Management',
+      category: 'Kebersamaan Karyawan',
+      date: '7 bulan lalu',
+      summary:
+          'Karyawan dan management berkumpul dalam acara buka puasa bersama.',
+      content: 'Buka puasa bersama karyawan PT. Alcotraindo Batam.',
       imageAsset: 'assets/images/news/news_002.jpg',
     );
     const tukarKadoItem = NewsItem(
       id: 'sample-activity-003',
-      title: 'Simulasi Tukar Kado Karyawan Tahunan',
-      category: 'Contoh Fiktif • Kebersamaan Karyawan',
-      date: '18 September 2026',
-      summary: 'Skenario fiktif tentang merayakan kebersamaan karyawan.',
-      content: 'Contoh fiktif tentang acara tukar kado karyawan tahunan.',
+      title: 'Tukar Kado Karyawan Tahunan',
+      category: 'Kebersamaan Karyawan',
+      date: '1 tahun lalu',
+      summary:
+          'Karyawan merayakan kebersamaan melalui acara tukar kado tahunan.',
+      content: 'Acara tukar kado tahunan karyawan PT. Alcotraindo Batam.',
       imageAsset: 'assets/images/news/news_003.jpg',
     );
 
@@ -352,7 +353,7 @@ void main() {
       expect(image.width, 80);
       expect(image.height, 80);
       expect(resizedImage.width, 240);
-      expect(image.semanticLabel, contains('Simulasi Annual Medical Check Up'));
+      expect(image.semanticLabel, contains('Annual Medical Check Up'));
       expect(find.byIcon(Icons.article_outlined), findsNothing);
       expect(tester.takeException(), isNull);
     });
@@ -375,7 +376,7 @@ void main() {
         'assets/images/news/news_002.jpg',
       );
       expect(image.fit, BoxFit.cover);
-      expect(image.semanticLabel, contains('Simulasi Buka Puasa Bersama'));
+      expect(image.semanticLabel, contains('Buka Puasa Bersama'));
       expect(find.byIcon(Icons.article_outlined), findsNothing);
       expect(tester.takeException(), isNull);
     });
@@ -398,10 +399,7 @@ void main() {
         'assets/images/news/news_003.jpg',
       );
       expect(image.fit, BoxFit.cover);
-      expect(
-        image.semanticLabel,
-        contains('Simulasi Tukar Kado Karyawan Tahunan'),
-      );
+      expect(image.semanticLabel, contains('Tukar Kado Karyawan Tahunan'));
       expect(find.byIcon(Icons.article_outlined), findsNothing);
       expect(tester.takeException(), isNull);
     });
