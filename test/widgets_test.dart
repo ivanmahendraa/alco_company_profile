@@ -243,6 +243,16 @@ void main() {
       summary: 'Summary of the recent company facility expansion activity.',
       content: 'Detailed description of the activity.',
     );
+    const medicalCheckUpItem = NewsItem(
+      id: 'sample-activity-001',
+      title: 'Simulasi Annual Medical Check Up Karyawan',
+      category: 'Contoh Fiktif • Kesehatan Kerja',
+      date: '04 November 2026',
+      summary:
+          'Skenario fiktif tentang pemeriksaan kesehatan berkala karyawan.',
+      content: 'Contoh fiktif tentang kesehatan kerja.',
+      imageAsset: 'assets/images/news/news_001.jpg',
+    );
 
     testWidgets('renders all content and supports tap and bookmark toggle', (
       tester,
@@ -301,6 +311,90 @@ void main() {
       );
 
       expect(find.byIcon(Icons.bookmark), findsOneWidget);
+    });
+
+    testWidgets('shows the local medical check-up image with alt text', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(body: NewsCard(item: medicalCheckUpItem)),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final image = tester.widget<Image>(find.byType(Image));
+      final resizedImage = image.image as ResizeImage;
+      expect(resizedImage.imageProvider, isA<AssetImage>());
+      expect(
+        (resizedImage.imageProvider as AssetImage).assetName,
+        'assets/images/news/news_001.jpg',
+      );
+      expect(image.fit, BoxFit.cover);
+      expect(image.width, 80);
+      expect(image.height, 80);
+      expect(resizedImage.width, 240);
+      expect(image.semanticLabel, contains('Simulasi Annual Medical Check Up'));
+      expect(find.byIcon(Icons.article_outlined), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('missing local image safely uses the existing placeholder', (
+      tester,
+    ) async {
+      const missingImageItem = NewsItem(
+        id: 'missing-image',
+        title: 'Berita tanpa gambar',
+        category: 'Contoh Fiktif • Contoh',
+        date: '04 November 2026',
+        summary: 'Skenario fiktif tanpa gambar.',
+        content: 'Konten contoh.',
+        imageAsset: 'assets/images/news/missing.jpg',
+      );
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(body: NewsCard(item: missingImageItem)),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Berita tanpa gambar'), findsOneWidget);
+      expect(find.byIcon(Icons.article_outlined), findsOneWidget);
+      expect(find.text('null'), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('mixed image and placeholder cards fit narrow and landscape', (
+      tester,
+    ) async {
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      for (final size in [const Size(320, 480), const Size(800, 360)]) {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  NewsCard(item: medicalCheckUpItem),
+                  const SizedBox(height: 12),
+                  NewsCard(item: testItem),
+                ],
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.byType(Image), findsOneWidget);
+        expect(find.byIcon(Icons.article_outlined), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      }
     });
   });
 

@@ -44,6 +44,8 @@ class NewsCard extends StatelessWidget {
               width: 80,
               height: 80,
               fit: BoxFit.cover,
+              cacheWidth: 240,
+              semanticLabel: 'Gambar berita: ${item.title}',
               errorBuilder: (_, _, _) => _buildFallbackThumbnail(),
             ),
           );
@@ -99,8 +101,8 @@ class NewsCard extends StatelessWidget {
                   if (onBookmarkToggle != null) ...[
                     const SizedBox(width: 8),
                     SizedBox(
-                      width: 36,
-                      height: 36,
+                      width: 48,
+                      height: 48,
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         iconSize: 22,

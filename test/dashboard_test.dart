@@ -8,6 +8,7 @@ import 'package:alco_company_profile/screens/business_info_screen.dart';
 import 'package:alco_company_profile/screens/company_profile_screen.dart';
 import 'package:alco_company_profile/screens/dashboard_screen.dart';
 import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
+import 'package:alco_company_profile/screens/news_screen.dart';
 import 'package:alco_company_profile/widgets/alco_logo.dart';
 import 'package:alco_company_profile/widgets/info_card.dart';
 import 'package:alco_company_profile/widgets/news_card.dart';
@@ -144,6 +145,11 @@ void main() {
     expect(find.text('Akses Cepat'), findsOneWidget);
     expect(find.text('Berita Terbaru'), findsOneWidget);
     expect(find.byType(NewsCard), findsNWidgets(3));
+    expect(find.byType(Image), findsOneWidget);
+    expect(
+      tester.widget<Image>(find.byType(Image)).semanticLabel,
+      contains('Simulasi Annual Medical Check Up'),
+    );
     for (final news in newsItems.take(3)) {
       expect(find.text(news.title), findsOneWidget);
     }
@@ -262,10 +268,8 @@ void main() {
 
     await tester.tap(find.text('Berita'));
     await tester.pumpAndSettle();
-    expect(
-      find.text('Layar Berita dan Aktivitas akan dibuat pada Task 08.'),
-      findsOneWidget,
-    );
+    expect(find.byType(NewsScreen), findsOneWidget);
+    expect(find.byKey(const Key('news-list')), findsOneWidget);
 
     await tester.tap(find.text('Beranda'));
     await tester.pumpAndSettle();
@@ -339,6 +343,21 @@ void main() {
       Navigator.of(tester.element(find.byType(DashboardScreen))).canPop(),
       isFalse,
     );
+  });
+
+  testWidgets('Dashboard quick access opens the populated News screen', (
+    WidgetTester tester,
+  ) async {
+    await _openDashboard(tester);
+
+    await tester.ensureVisible(find.byKey(const Key('quick-access-news')));
+    await tester.tap(find.byKey(const Key('quick-access-news')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(NewsScreen), findsOneWidget);
+    expect(find.byKey(const Key('news-search-field')), findsOneWidget);
+    expect(find.text(newsItems.first.title), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets(
