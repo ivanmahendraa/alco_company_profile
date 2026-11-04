@@ -21,14 +21,19 @@ const List<NewsItem> newsItems = <NewsItem>[
   ),
   NewsItem(
     id: 'sample-activity-002',
-    title: 'Simulasi Kegiatan Kepedulian Lingkungan',
-    category: 'Contoh Fiktif • Lingkungan',
+    title: 'Simulasi Buka Puasa Bersama Karyawan dan Management',
+    category: 'Contoh Fiktif • Kebersamaan Karyawan',
     date: '12 Oktober 2026',
-    summary: 'Skenario fiktif tentang edukasi umum untuk menjaga kebersihan lingkungan.',
+    summary:
+        'Skenario fiktif tentang buka puasa bersama sebagai momen kebersamaan '
+        'karyawan dan management.',
     content:
-        'Contoh fiktif ini memuat gambaran edukasi umum tentang kebersihan '
-        'dan kepedulian lingkungan. Konten ini bukan laporan kegiatan '
-        'perusahaan yang telah diverifikasi.',
+        'Contoh fiktif ini menggambarkan kegiatan buka puasa bersama karyawan '
+        'dan management sebagai momen kebersamaan. Gambar digunakan sebagai '
+        'ilustrasi untuk contoh aplikasi. Konten ini bukan laporan kegiatan '
+        'yang telah diverifikasi dan tidak menyatakan bahwa acara tersebut '
+        'benar-benar diselenggarakan oleh PT. Alcotraindo Batam.',
+    imageAsset: 'assets/images/news/news_002.jpg',
   ),
   NewsItem(
     id: 'sample-activity-003',

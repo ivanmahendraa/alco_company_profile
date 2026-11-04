@@ -145,11 +145,14 @@ void main() {
     expect(find.text('Akses Cepat'), findsOneWidget);
     expect(find.text('Berita Terbaru'), findsOneWidget);
     expect(find.byType(NewsCard), findsNWidgets(3));
-    expect(find.byType(Image), findsOneWidget);
-    expect(
-      tester.widget<Image>(find.byType(Image)).semanticLabel,
-      contains('Simulasi Annual Medical Check Up'),
-    );
+    expect(find.byType(Image), findsNWidgets(2));
+    final imageLabels = tester
+        .widgetList<Image>(find.byType(Image))
+        .map((image) => image.semanticLabel)
+        .toList();
+    expect(imageLabels, hasLength(2));
+    expect(imageLabels[0], contains('Simulasi Annual Medical Check Up'));
+    expect(imageLabels[1], contains('Simulasi Buka Puasa Bersama'));
     for (final news in newsItems.take(3)) {
       expect(find.text(news.title), findsOneWidget);
     }

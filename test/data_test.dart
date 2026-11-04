@@ -110,8 +110,18 @@ void main() {
       expect(newsItems.first.date, '04 November 2026');
       expect(newsItems.first.summary, startsWith('Skenario fiktif '));
       expect(newsItems.first.imageAsset, 'assets/images/news/news_001.jpg');
+      final bukaPuasaItem = newsItems[1];
+      expect(bukaPuasaItem.id, 'sample-activity-002');
       expect(
-        newsItems.skip(1).every((item) => item.imageAsset == null),
+        bukaPuasaItem.title,
+        'Simulasi Buka Puasa Bersama Karyawan dan Management',
+      );
+      expect(bukaPuasaItem.category, 'Contoh Fiktif • Kebersamaan Karyawan');
+      expect(bukaPuasaItem.date, '12 Oktober 2026');
+      expect(bukaPuasaItem.summary, startsWith('Skenario fiktif '));
+      expect(bukaPuasaItem.imageAsset, 'assets/images/news/news_002.jpg');
+      expect(
+        newsItems.skip(2).every((item) => item.imageAsset == null),
         isTrue,
       );
 

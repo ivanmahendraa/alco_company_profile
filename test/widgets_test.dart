@@ -253,6 +253,15 @@ void main() {
       content: 'Contoh fiktif tentang kesehatan kerja.',
       imageAsset: 'assets/images/news/news_001.jpg',
     );
+    const bukaPuasaItem = NewsItem(
+      id: 'sample-activity-002',
+      title: 'Simulasi Buka Puasa Bersama Karyawan dan Management',
+      category: 'Contoh Fiktif • Kebersamaan Karyawan',
+      date: '12 Oktober 2026',
+      summary: 'Skenario fiktif tentang buka puasa bersama.',
+      content: 'Contoh fiktif tentang kebersamaan karyawan.',
+      imageAsset: 'assets/images/news/news_002.jpg',
+    );
 
     testWidgets('renders all content and supports tap and bookmark toggle', (
       tester,
@@ -339,6 +348,29 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
+    testWidgets('shows the local buka puasa image with Indonesian alt text', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(body: NewsCard(item: bukaPuasaItem)),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final image = tester.widget<Image>(find.byType(Image));
+      final resizedImage = image.image as ResizeImage;
+      expect(resizedImage.imageProvider, isA<AssetImage>());
+      expect(
+        (resizedImage.imageProvider as AssetImage).assetName,
+        'assets/images/news/news_002.jpg',
+      );
+      expect(image.fit, BoxFit.cover);
+      expect(image.semanticLabel, contains('Simulasi Buka Puasa Bersama'));
+      expect(find.byIcon(Icons.article_outlined), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('missing local image safely uses the existing placeholder', (
       tester,
     ) async {
@@ -383,6 +415,8 @@ void main() {
                 children: [
                   NewsCard(item: medicalCheckUpItem),
                   const SizedBox(height: 12),
+                  NewsCard(item: bukaPuasaItem),
+                  const SizedBox(height: 12),
                   NewsCard(item: testItem),
                 ],
               ),
@@ -391,7 +425,7 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        expect(find.byType(Image), findsOneWidget);
+        expect(find.byType(Image), findsNWidgets(2));
         expect(find.byIcon(Icons.article_outlined), findsOneWidget);
         expect(tester.takeException(), isNull);
       }
