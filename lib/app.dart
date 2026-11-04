@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'data/news_data.dart';
 import 'models/news_item.dart';
 import 'providers/news_provider.dart';
+import 'screens/business_info_screen.dart';
+import 'screens/company_profile_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/destination_placeholder_screen.dart';
 import 'screens/login_screen.dart';
@@ -51,19 +53,12 @@ class AlcoApp extends StatelessWidget {
       case AppRoutes.companyProfile:
         return MaterialPageRoute<dynamic>(
           settings: settings,
-          builder: (_) => const DestinationPlaceholderScreen(
-            title: 'Profil Perusahaan',
-            description: 'Layar Profil Perusahaan akan dibuat pada Task 06.',
-            selectedNavigationIndex: 1,
-          ),
+          builder: (_) => const CompanyProfileScreen(),
         );
       case AppRoutes.businessInfo:
         return MaterialPageRoute<dynamic>(
           settings: settings,
-          builder: (_) => const DestinationPlaceholderScreen(
-            title: 'Informasi Bisnis',
-            description: 'Layar Informasi Bisnis akan dibuat pada Task 07.',
-          ),
+          builder: (_) => const BusinessInfoScreen(),
         );
       case AppRoutes.news:
         return MaterialPageRoute<dynamic>(

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alco_company_profile/app.dart';
 import 'package:alco_company_profile/data/company_data.dart';
 import 'package:alco_company_profile/data/news_data.dart';
+import 'package:alco_company_profile/screens/company_profile_screen.dart';
 import 'package:alco_company_profile/screens/dashboard_screen.dart';
 import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
 import 'package:alco_company_profile/widgets/alco_logo.dart';
@@ -230,10 +231,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('dashboard-view-profile-link')));
       await tester.pumpAndSettle();
-      expect(
-        find.text('Layar Profil Perusahaan akan dibuat pada Task 06.'),
-        findsOneWidget,
-      );
+      expect(find.byType(CompanyProfileScreen), findsOneWidget);
       await tester.tap(find.text('Beranda'));
       await tester.pumpAndSettle();
 
@@ -270,10 +268,7 @@ void main() {
       await tester.ensureVisible(find.byKey(const Key('quick-access-company')));
       await tester.tap(find.byKey(const Key('quick-access-company')));
       await tester.pumpAndSettle();
-      expect(
-        find.text('Layar Profil Perusahaan akan dibuat pada Task 06.'),
-        findsOneWidget,
-      );
+      expect(find.byType(CompanyProfileScreen), findsOneWidget);
 
       await tester.tap(find.text('Berita'));
       await tester.pumpAndSettle();

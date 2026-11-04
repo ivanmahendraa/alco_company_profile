@@ -15,6 +15,7 @@ class InfoCard extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double borderRadius;
   final bool centerTitleWithIcon;
+  final Color? titleColor;
 
   const InfoCard({
     super.key,
@@ -27,6 +28,7 @@ class InfoCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(16.0),
     this.borderRadius = 14.0,
     this.centerTitleWithIcon = false,
+    this.titleColor,
   });
 
   @override
@@ -61,10 +63,9 @@ class InfoCard extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        color: AppColors.mainText,
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
-                      ),
+                      ).copyWith(color: titleColor ?? AppColors.mainText),
                     ),
                     if (description != null) ...[
                       const SizedBox(height: 6.0),
