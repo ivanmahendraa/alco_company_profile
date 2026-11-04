@@ -15,7 +15,7 @@ Future<void> _openDashboard(WidgetTester tester) async {
   await tester.pump(const Duration(seconds: 2));
   await tester.pumpAndSettle();
   await tester.enterText(
-    find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+    find.widgetWithText(TextFormField, 'Masukkan Kartu ID Anda'),
     '123040014',
   );
   await tester.enterText(
@@ -398,7 +398,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.enterText(
-        find.widgetWithText(TextFormField, 'Masukkan ID Card Anda'),
+        find.widgetWithText(TextFormField, 'Masukkan Kartu ID Anda'),
         '123040014',
       );
       await tester.enterText(

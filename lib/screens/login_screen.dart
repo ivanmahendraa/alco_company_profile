@@ -15,8 +15,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  static const Color _idCardFieldColor = Color(0xFFE8F0FE);
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _idCardController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -143,12 +141,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 24),
             CustomTextField(
-              label: 'ID Card',
-              hintText: 'Masukkan ID Card Anda',
+              label: 'Kartu ID',
+              hintText: 'Masukkan Kartu ID Anda',
               controller: _idCardController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               textInputAction: TextInputAction.next,
-              fillColor: _idCardFieldColor,
               prefixIcon: const Icon(
                 Icons.badge_outlined,
                 color: AppColors.secondaryText,
@@ -157,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: _clearCredentialsError,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'ID Card wajib diisi.';
+                  return 'Kartu ID wajib diisi.';
                 }
                 return null;
               },
@@ -200,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Semantics(
                 liveRegion: true,
                 child: const Text(
-                  'ID Card atau password tidak sesuai.',
+                  'Kartu ID atau password tidak sesuai.',
                   key: Key('login-credentials-error'),
                   style: TextStyle(
                     color: AppColors.error,
