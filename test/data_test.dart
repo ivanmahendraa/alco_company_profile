@@ -120,8 +120,16 @@ void main() {
       expect(bukaPuasaItem.date, '12 Oktober 2026');
       expect(bukaPuasaItem.summary, startsWith('Skenario fiktif '));
       expect(bukaPuasaItem.imageAsset, 'assets/images/news/news_002.jpg');
+      final tukarKadoItem = newsItems[2];
+      expect(tukarKadoItem.id, 'sample-activity-003');
+      expect(tukarKadoItem.title, 'Simulasi Tukar Kado Karyawan Tahunan');
+      expect(tukarKadoItem.category, 'Contoh Fiktif • Kebersamaan Karyawan');
+      expect(tukarKadoItem.date, '18 September 2026');
+      expect(tukarKadoItem.summary, startsWith('Skenario fiktif '));
+      expect(tukarKadoItem.summary, contains('merayakan kebersamaan'));
+      expect(tukarKadoItem.imageAsset, 'assets/images/news/news_003.jpg');
       expect(
-        newsItems.skip(2).every((item) => item.imageAsset == null),
+        newsItems.skip(3).every((item) => item.imageAsset == null),
         isTrue,
       );
 

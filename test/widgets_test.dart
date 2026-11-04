@@ -262,6 +262,15 @@ void main() {
       content: 'Contoh fiktif tentang kebersamaan karyawan.',
       imageAsset: 'assets/images/news/news_002.jpg',
     );
+    const tukarKadoItem = NewsItem(
+      id: 'sample-activity-003',
+      title: 'Simulasi Tukar Kado Karyawan Tahunan',
+      category: 'Contoh Fiktif • Kebersamaan Karyawan',
+      date: '18 September 2026',
+      summary: 'Skenario fiktif tentang merayakan kebersamaan karyawan.',
+      content: 'Contoh fiktif tentang acara tukar kado karyawan tahunan.',
+      imageAsset: 'assets/images/news/news_003.jpg',
+    );
 
     testWidgets('renders all content and supports tap and bookmark toggle', (
       tester,
@@ -371,6 +380,32 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
+    testWidgets('shows the local annual gift exchange image with alt text', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(body: NewsCard(item: tukarKadoItem)),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final image = tester.widget<Image>(find.byType(Image));
+      final resizedImage = image.image as ResizeImage;
+      expect(resizedImage.imageProvider, isA<AssetImage>());
+      expect(
+        (resizedImage.imageProvider as AssetImage).assetName,
+        'assets/images/news/news_003.jpg',
+      );
+      expect(image.fit, BoxFit.cover);
+      expect(
+        image.semanticLabel,
+        contains('Simulasi Tukar Kado Karyawan Tahunan'),
+      );
+      expect(find.byIcon(Icons.article_outlined), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('missing local image safely uses the existing placeholder', (
       tester,
     ) async {
@@ -417,6 +452,8 @@ void main() {
                   const SizedBox(height: 12),
                   NewsCard(item: bukaPuasaItem),
                   const SizedBox(height: 12),
+                  NewsCard(item: tukarKadoItem),
+                  const SizedBox(height: 12),
                   NewsCard(item: testItem),
                 ],
               ),
@@ -425,7 +462,12 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        expect(find.byType(Image), findsNWidgets(2));
+        expect(find.byType(Image), findsWidgets);
+        await tester.scrollUntilVisible(
+          find.byIcon(Icons.article_outlined),
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
         expect(find.byIcon(Icons.article_outlined), findsOneWidget);
         expect(tester.takeException(), isNull);
       }

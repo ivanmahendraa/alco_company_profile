@@ -37,15 +37,19 @@ const List<NewsItem> newsItems = <NewsItem>[
   ),
   NewsItem(
     id: 'sample-activity-003',
-    title: 'Simulasi Pelatihan Komunikasi Tim',
-    category: 'Contoh Fiktif • Pengembangan Tim',
+    title: 'Simulasi Tukar Kado Karyawan Tahunan',
+    category: 'Contoh Fiktif • Kebersamaan Karyawan',
     date: '18 September 2026',
     summary:
-        'Skenario fiktif mengenai latihan komunikasi dan kolaborasi antartim.',
+        'Skenario fiktif tentang merayakan kebersamaan dalam acara tukar kado '
+        'karyawan tahunan.',
     content:
-        'Contoh fiktif ini menggambarkan latihan komunikasi dan kolaborasi '
-        'yang dapat digunakan sebagai materi demonstrasi. Tidak ada klaim '
-        'bahwa pelatihan ini telah berlangsung di perusahaan.',
+        'Contoh fiktif ini menggambarkan acara tukar kado karyawan tahunan '
+        'sebagai momen untuk merayakan kebersamaan. Gambar digunakan sebagai '
+        'ilustrasi untuk contoh aplikasi. Konten ini bukan laporan kegiatan '
+        'yang telah diverifikasi dan tidak menyatakan bahwa acara tersebut '
+        'benar-benar diselenggarakan oleh PT. Alcotraindo Batam.',
+    imageAsset: 'assets/images/news/news_003.jpg',
   ),
   NewsItem(
     id: 'sample-activity-004',
