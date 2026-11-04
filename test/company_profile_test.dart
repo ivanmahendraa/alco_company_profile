@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alco_company_profile/app.dart';
 import 'package:alco_company_profile/data/company_data.dart';
 import 'package:alco_company_profile/models/company_info.dart';
+import 'package:alco_company_profile/screens/business_info_screen.dart';
 import 'package:alco_company_profile/screens/company_profile_screen.dart';
 import 'package:alco_company_profile/screens/dashboard_screen.dart';
-import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
 import 'package:alco_company_profile/utils/app_colors.dart';
 import 'package:alco_company_profile/widgets/alco_logo.dart';
 
@@ -151,7 +151,7 @@ void main() {
     );
   });
 
-  testWidgets('Business information shortcut opens its placeholder', (
+  testWidgets('Business information shortcut opens the real screen', (
     WidgetTester tester,
   ) async {
     await _openDashboard(tester);
@@ -162,7 +162,7 @@ void main() {
     await tester.tap(find.text('Lihat Informasi Bisnis'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(DestinationPlaceholderScreen), findsOneWidget);
+    expect(find.byType(BusinessInfoScreen), findsOneWidget);
     expect(find.text('Informasi Bisnis'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

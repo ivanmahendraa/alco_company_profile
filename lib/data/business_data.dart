@@ -1,5 +1,7 @@
 typedef BusinessTopic = ({String title, String description});
 
+const String businessInfoScreenTitle = 'Informasi Bisnis';
+
 const List<BusinessTopic> businessTopics = <BusinessTopic>[
   (
     title: 'Manufaktur Tembakau',

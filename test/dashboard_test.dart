@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alco_company_profile/app.dart';
 import 'package:alco_company_profile/data/company_data.dart';
 import 'package:alco_company_profile/data/news_data.dart';
+import 'package:alco_company_profile/screens/business_info_screen.dart';
 import 'package:alco_company_profile/screens/company_profile_screen.dart';
 import 'package:alco_company_profile/screens/dashboard_screen.dart';
 import 'package:alco_company_profile/screens/destination_placeholder_screen.dart';
@@ -224,75 +225,63 @@ void main() {
     expect(dashboardGreeting(DateTime(2026, 1, 1, 18)), 'Selamat malam');
   });
 
-  testWidgets(
-    'Dashboard shortcuts and news preview open matching placeholders',
-    (WidgetTester tester) async {
-      await _openDashboard(tester);
+  testWidgets('Dashboard shortcuts and news preview open matching screens', (
+    WidgetTester tester,
+  ) async {
+    await _openDashboard(tester);
 
-      await tester.tap(find.byKey(const Key('dashboard-view-profile-link')));
-      await tester.pumpAndSettle();
-      expect(find.byType(CompanyProfileScreen), findsOneWidget);
-      await tester.tap(find.text('Beranda'));
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('dashboard-view-profile-link')));
+    await tester.pumpAndSettle();
+    expect(find.byType(CompanyProfileScreen), findsOneWidget);
+    await tester.tap(find.text('Beranda'));
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('dashboard-business-info-link')));
-      await tester.pumpAndSettle();
-      expect(
-        find.text('Layar Informasi Bisnis akan dibuat pada Task 07.'),
-        findsOneWidget,
-      );
+    await tester.tap(find.byKey(const Key('dashboard-business-info-link')));
+    await tester.pumpAndSettle();
+    expect(find.byType(BusinessInfoScreen), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.arrow_back));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('dashboard-company-summary')));
-      await tester.pumpAndSettle();
-      expect(
-        find.text('Layar Informasi Bisnis akan dibuat pada Task 07.'),
-        findsOneWidget,
-      );
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('dashboard-company-summary')));
+    await tester.pumpAndSettle();
+    expect(find.byType(BusinessInfoScreen), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.arrow_back));
-      await tester.pumpAndSettle();
-      await tester.ensureVisible(
-        find.byKey(const Key('quick-access-business')),
-      );
-      await tester.tap(find.byKey(const Key('quick-access-business')));
-      await tester.pumpAndSettle();
-      expect(
-        find.text('Layar Informasi Bisnis akan dibuat pada Task 07.'),
-        findsOneWidget,
-      );
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('quick-access-business')));
+    await tester.tap(find.byKey(const Key('quick-access-business')));
+    await tester.pumpAndSettle();
+    expect(find.byType(BusinessInfoScreen), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.arrow_back));
-      await tester.pumpAndSettle();
-      await tester.ensureVisible(find.byKey(const Key('quick-access-company')));
-      await tester.tap(find.byKey(const Key('quick-access-company')));
-      await tester.pumpAndSettle();
-      expect(find.byType(CompanyProfileScreen), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('quick-access-company')));
+    await tester.tap(find.byKey(const Key('quick-access-company')));
+    await tester.pumpAndSettle();
+    expect(find.byType(CompanyProfileScreen), findsOneWidget);
 
-      await tester.tap(find.text('Berita'));
-      await tester.pumpAndSettle();
-      expect(
-        find.text('Layar Berita dan Aktivitas akan dibuat pada Task 08.'),
-        findsOneWidget,
-      );
+    await tester.tap(find.text('Berita'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Layar Berita dan Aktivitas akan dibuat pada Task 08.'),
+      findsOneWidget,
+    );
 
-      await tester.tap(find.text('Beranda'));
-      await tester.pumpAndSettle();
-      await tester.ensureVisible(
-        find.byKey(Key('dashboard-news-${newsItems.first.id}')),
-      );
-      await tester.tap(find.text(newsItems.first.title));
-      await tester.pumpAndSettle();
-      expect(find.byType(DestinationPlaceholderScreen), findsOneWidget);
-      expect(find.text(newsItems.first.title), findsOneWidget);
-      expect(
-        find.text('Layar Detail Berita akan dibuat pada Task 09.'),
-        findsOneWidget,
-      );
-      expect(tester.takeException(), isNull);
-    },
-  );
+    await tester.tap(find.text('Beranda'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(Key('dashboard-news-${newsItems.first.id}')),
+    );
+    await tester.tap(find.text(newsItems.first.title));
+    await tester.pumpAndSettle();
+    expect(find.byType(DestinationPlaceholderScreen), findsOneWidget);
+    expect(find.text(newsItems.first.title), findsOneWidget);
+    expect(
+      find.text('Layar Detail Berita akan dibuat pada Task 09.'),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('all non-Dashboard placeholders show a labeled back button', (
     WidgetTester tester,
