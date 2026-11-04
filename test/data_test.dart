@@ -101,6 +101,19 @@ void main() {
         'sample-activity-005',
         'sample-activity-006',
       ]);
+      expect(newsItems.first.id, 'sample-activity-001');
+      expect(
+        newsItems.first.title,
+        'Simulasi Annual Medical Check Up Karyawan',
+      );
+      expect(newsItems.first.category, 'Contoh Fiktif • Kesehatan Kerja');
+      expect(newsItems.first.date, '04 November 2026');
+      expect(newsItems.first.summary, startsWith('Skenario fiktif '));
+      expect(newsItems.first.imageAsset, 'assets/images/news/news_001.jpg');
+      expect(
+        newsItems.skip(1).every((item) => item.imageAsset == null),
+        isTrue,
+      );
 
       for (final item in newsItems) {
         expect(item.id, isNotEmpty);

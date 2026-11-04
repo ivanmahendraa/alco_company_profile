@@ -5,14 +5,19 @@ import '../models/news_item.dart';
 const List<NewsItem> newsItems = <NewsItem>[
   NewsItem(
     id: 'sample-activity-001',
-    title: 'Simulasi Diskusi Keselamatan Kerja',
-    category: 'Contoh Fiktif • Keselamatan',
+    title: 'Simulasi Annual Medical Check Up Karyawan',
+    category: 'Contoh Fiktif • Kesehatan Kerja',
     date: '04 November 2026',
-    summary: 'Skenario fiktif untuk contoh informasi diskusi keselamatan di aplikasi.',
+    summary:
+        'Skenario fiktif tentang pemeriksaan kesehatan berkala karyawan '
+        'sebagai topik umum kesehatan kerja.',
     content:
-        'Contoh fiktif ini menggambarkan diskusi umum tentang keselamatan '
-        'kerja dan identifikasi risiko. Konten ini tidak menyatakan bahwa '
-        'kegiatan tersebut benar-benar diselenggarakan oleh perusahaan.',
+        'Contoh fiktif ini membahas pemeriksaan kesehatan berkala karyawan '
+        'secara umum. Rincian pemeriksaan dapat berbeda sesuai kebutuhan dan '
+        'kebijakan masing-masing organisasi. Konten ini bukan laporan kegiatan '
+        'PT. Alcotraindo Batam dan tidak menyatakan bahwa pemeriksaan benar-benar '
+        'diselenggarakan oleh perusahaan.',
+    imageAsset: 'assets/images/news/news_001.jpg',
   ),
   NewsItem(
     id: 'sample-activity-002',
